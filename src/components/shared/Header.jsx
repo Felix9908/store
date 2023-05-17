@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { SidebarContext } from "../../Context/SidebarContext";
 import { CartContext } from "../../Context/CartContext";
+import Tabs from './ContentProducts/Tabs'
 
 function Header() {
   const { setIsOpen } = useContext(SidebarContext);
@@ -32,30 +33,10 @@ function Header() {
         </div>
         {/* tabs */}
         <nav className="text-gray-300 flex items-center justify-between md:justify-start md:gap-8 border-b mb-6">
-          <Link
-            to={`/`}
-            className="relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute hover:before:bg-[#ec7c6a] before:left-0 before:rounded-full before:bottom-[-2px] hover:text-[#ec7c6a] transition-all"
-          >
-            Hot dishes
-          </Link>
-          <Link
-            to={`/ColdDishes`}
-            className="relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute hover:before:bg-[#ec7c6a] before:left-0 before:rounded-full before:bottom-[-2px] hover:text-[#ec7c6a] transition-all"
-          >
-            Cold dishes
-          </Link>
-          <Link
-            to={`/soup`}
-            className="relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute hover:before:bg-[#ec7c6a] before:left-0 before:rounded-full before:bottom-[-2px] hover:text-[#ec7c6a] transition-all"
-          >
-            Soup
-          </Link>
-          <Link
-            to={`/Grill`}
-            className="relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute hover:before:bg-[#ec7c6a] before:left-0 before:rounded-full before:bottom-[-2px] hover:text-[#ec7c6a] transition-all"
-          >
-            Grill
-          </Link>
+          <Tabs to={`/`} name="Hot dishes"/>
+          <Tabs to={`/ColdDishes`} name="Cold dishes"/>
+          <Tabs to={`/soup`} name="Soup"/>
+          <Tabs to={`/Grill`} name="Grill"/>
         </nav>
       </header>
     </div>

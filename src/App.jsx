@@ -1,22 +1,21 @@
 import SideBar from "./components/shared/SideBar";
 import ProductCarrito from "./components/shared/ProductCarrito";
-import Soup from "./components/shared/ContentProducts/Soup";
-import HotDishes from "./components/shared/ContentProducts/HotDishes";
-import ColdDishes from "./components/shared/ContentProducts/ColdDishes";
-import Grill from "./components/shared/ContentProducts/Grill";
+import ProductList from "./components/shared/ContentProducts/ProductList";
 import Carrito from "./components/shared/Carrito";
-
+import { useContext,useState } from "react";
 import MobileMenu from "./components/shared/MobileMenu";
 import Header from "./components/shared/Header";
+import { ProductContext } from "./Context/ProductContext";
 import {
   RiMenu3Fill,
   RiUser3Line,
   RiAddLine,
   RiLightbulbLine,
 } from "react-icons/ri";
-import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 function App() {
+  const { loading, grill, coldDishes, hotDishes, soup } = useContext(ProductContext);
   const [showMenu, setShowMenu] = useState(false);
   const [showOlder, setShowOlder] = useState(false);
 
@@ -33,10 +32,10 @@ function App() {
           <div className="lg:col-span-8 md:p-8">
             <Header  />
             <Routes>
-              <Route path="/soup" element={<Soup/>} />
-              <Route path="/" element={<HotDishes />} />
-              <Route path="/ColdDishes" element={<ColdDishes />} />
-              <Route path="/Grill" element={<Grill />} />
+              <Route path="/soup" element={<ProductList data1={soup}/>} />
+              <Route path="/" element={<ProductList data1={hotDishes}/>} />
+              <Route path="/ColdDishes" element={<ProductList data1={coldDishes}/>} />
+              <Route path="/Grill" element={<ProductList data1={grill}/>} />
             </Routes>
           </div>
         </main>

@@ -1,13 +1,10 @@
 import Card from "../Card";
 import { RiArrowDownSLine, RiSearch2Line } from "react-icons/ri";
-import { ProductContext } from "../../../Context/ProductContext";
 import { useContext, useState, useEffect } from "react";
 import PaginationButtons from "../../PaginationButtons";
 
-function Soup() {
+function ProductList({ data1 }) {
   const totalItems = 8;
-  const { products } = useContext(ProductContext);
-  const newData = products.filter((data1) => data1.tipe === "soup");
   const [filteredList, setFilteredList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -15,21 +12,21 @@ function Soup() {
   const filter = (e) => {
     if (e == undefined) {
       if (currentPage == 2) {
-        setFilteredList([...newData].splice(8, totalItems));
+        setFilteredList([...data1].splice(8, totalItems));
       } else {
-        setFilteredList([...newData].splice(0, totalItems));
+        setFilteredList([...data1].splice(0, totalItems));
       }
-      setTotalPages(newData.length / totalItems);
+      setTotalPages(data1.length / totalItems);
     } else {
       setFilteredList(
-        newData.filter((f) => f.tipe.toLowerCase().includes(e.target.value))
+        data1.filter((f) => f.tipe.toLowerCase().includes(e.target.value))
       );
     }
   };
 
   useEffect(() => {
     filter();
-  }, [newData]);
+  }, [data1, currentPage]);
 
   return (
     <div>
@@ -64,4 +61,4 @@ function Soup() {
   );
 }
 
-export default Soup;
+export default ProductList;

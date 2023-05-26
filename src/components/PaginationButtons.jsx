@@ -2,34 +2,33 @@ import ReactPaginate from "react-paginate";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { motion } from "framer-motion";
 
-const PaginationButtons = ({totalPages,setCurrentPage}) => {
-
-  const handlePageClick = ({selected}) =>{
-    setCurrentPage(selected + 1)
-  }
+const PaginationButtons = ({ totalPages, setCurrentPage }) => {
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   const paginationVariants = {
     hidden: {
       opacity: 0,
       y: 100,
     },
-    visivle: {
+    visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
         stiffness: 260,
         damping: 20,
-        duration:1
+        duration: 1,
       },
     },
   };
   return (
-      <motion.div
-        variants={paginationVariants}
-        initial="hidden"
-        animate="visivle"
-        >
+    <motion.div
+      variants={paginationVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <ReactPaginate
         breakLabel={<span className="mr-4">...</span>}
         nextLabel={

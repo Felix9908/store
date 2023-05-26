@@ -1,4 +1,6 @@
-import React from "react";
+import { useContext, useState } from "react";
+import { ProductContext } from "../../Context/ProductContext";
+import { Link } from "react-router-dom";
 import {
   RiHome6Line,
   RiPercentLine,
@@ -10,7 +12,15 @@ import {
 } from "react-icons/ri";
 
 function SideBar(props) {
+  const { logout, logged } = useContext(ProductContext);
   const { showMenu } = props;
+  const [activeItem, setActiveItem] = useState("");
+  const privUser1 = sessionStorage.getItem("privUser");
+
+  const handleItemClick = (item) => {
+    setActiveItem(item);
+  };
+
   return (
     <div
       className={`z-20 bg-[#1F1D2B] fixed lg:left-0 top-0 w-28 h-full flex flex-col justify-between py-6 rounded-tr-xl rounded-br-xl transition-all ${
@@ -24,71 +34,196 @@ function SideBar(props) {
               logo
             </h1>
           </li>
-          <li className="bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl">
+          <li className={`${
+                activeItem === "home"
+                  ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                  : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
+              }`}>
+            <Link
+              to={`/`}
+              className={`${
+                activeItem === "home"
+                  ? "bg-[#ec7c6a]"
+                  : "bg-[#262837] hover:bg-[#ec7c6a]"
+              } p-4 flex justify-center rounded-xl`}
+              onClick={() => handleItemClick("home")}
+            >
+              <RiHome6Line className={`text-2xl ${
+                  activeItem === "home"
+                    ? "text-white"
+                    : "text-[#ec7c6a] group-hover:text-white"
+                }`} />
+            </Link>
+          </li>
+
+          <li
+            className={`${
+              logged ? "" : "hidden"
+            } ${
+              activeItem === "percent"
+                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
+            }`}
+          >
             <a
               href="#"
-              className="bg-[#ec7c6a] p-4 flex justify-center rounded-xl"
+              className={`${
+                activeItem === "percent"
+                  ? "bg-[#ec7c6a]"
+                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+              } p-4 flex justify-center rounded-xl`}
+              onClick={() => handleItemClick("percent")}
             >
-              <RiHome6Line className="text-2xl text-white" />
+              <RiPercentLine
+                className={`text-2xl ${
+                  activeItem === "percent"
+                    ? "text-white"
+                    : "text-[#ec7c6a] group-hover:text-white"
+                }`}
+              />
             </a>
           </li>
 
-          <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group trancition-colors">
+          <li
+            className={`${
+              logged ? "" : "hidden"
+            } ${
+              activeItem === "pieChart"
+                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
+            }`}
+          >
             <a
               href="#"
-              className="group-hover:bg-[#ec7c6a] p-4 flex justify-center rounded-xl"
+              className={`${
+                activeItem === "pieChart"
+                  ? "bg-[#ec7c6a]"
+                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+              } p-4 flex justify-center rounded-xl`}
+              onClick={() => handleItemClick("pieChart")}
             >
-              <RiPercentLine className="text-2xl text-[#ec7c6a] group-hover:text-white" />
+              <RiPieChartLine
+                className={`text-2xl ${
+                  activeItem === "pieChart"
+                    ? "text-white"
+                    : "text-[#ec7c6a] group-hover:text-white"
+                }`}
+              />
             </a>
           </li>
 
-          <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group trancition-colors">
+          <li
+            className={`${
+              logged ? "" : "hidden"
+            } ${
+              activeItem === "mail"
+                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
+            }`}
+          >
             <a
               href="#"
-              className="group-hover:bg-[#ec7c6a] p-4 flex justify-center rounded-xl"
+              className={`${
+                activeItem === "mail"
+                  ? "bg-[#ec7c6a]"
+                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+              } p-4 flex justify-center rounded-xl`}
+              onClick={() => handleItemClick("mail")}
             >
-              <RiPieChartLine className="text-2xl text-[#ec7c6a] group-hover:text-white" />
+              <RiMailLine
+                className={`text-2xl ${
+                  activeItem === "mail"
+                    ? "text-white"
+                    : "text-[#ec7c6a] group-hover:text-white"
+                }`}
+              />
             </a>
           </li>
 
-          <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group trancition-colors">
+          <li
+            className={`${
+              logged ? "" : "hidden"
+            } ${
+              activeItem === "notification"
+                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
+            }`}
+          >
             <a
               href="#"
-              className="group-hover:bg-[#ec7c6a] p-4 flex justify-center rounded-xl"
+              className={`${
+                activeItem === "notification"
+                  ? "bg-[#ec7c6a]"
+                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+              } p-4 flex justify-center rounded-xl`}
+              onClick={() => handleItemClick("notification")}
             >
-              <RiMailLine className="text-2xl text-[#ec7c6a] group-hover:text-white" />
+              <RiNotificationLine
+                className={`text-2xl ${
+                  activeItem === "notification"
+                    ? "text-white"
+                    : "text-[#ec7c6a] group-hover:text-white"
+                }`}
+              />
             </a>
           </li>
 
-          <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group trancition-colors">
-            <a
-              href="#"
-              className="group-hover:bg-[#ec7c6a] p-4 flex justify-center rounded-xl"
+          <li
+            className={`${
+              logged && privUser1 === "Admin"? "" : "hidden"
+            } ${
+              activeItem === "settings"
+                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
+            }`}
+          >
+            <Link
+              to={`/Settings`}
+              className={`${
+                activeItem === "settings" 
+                  ? "bg-[#ec7c6a]"
+                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+              } p-4 flex justify-center rounded-xl`}
+              onClick={() => handleItemClick("settings")}
             >
-              <RiNotificationLine className="text-2xl text-[#ec7c6a] group-hover:text-white" />
-            </a>
-          </li>
-
-          <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group trancition-colors">
-            <a
-              href="#"
-              className="group-hover:bg-[#ec7c6a] p-4 flex justify-center rounded-xl"
-            >
-              <RiSettings4Line className="text-2xl text-[#ec7c6a] group-hover:text-white" />
-            </a>
+              <RiSettings4Line
+                className={`text-2xl ${
+                  activeItem === "settings" 
+                    ? "text-white"
+                    : "text-[#ec7c6a] group-hover:text-white"
+                }`}
+              />
+            </Link>
           </li>
         </ul>
       </div>
       <div>
         <ul className="pl-4">
-          <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group trancition-colors">
+          <button
+            className={`${
+              logged ? "" : "hidden"
+            } p-4 rounded-tl-xl rounded-bl-xl group trancition-colors`}
+          >
             <a
-              href="#"
-              className="group-hover:bg-[#ec7c6a] p-4 flex justify-center rounded-xl"
+              onClick={() => {
+                logout();
+                handleItemClick("logout");
+              }}
+              className={`${
+                activeItem === "logout"
+                  ? "bg-[#ec7c6a]"
+                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+              } p-4 flex justify-center rounded-xl`}
             >
-              <RiLogoutBoxLine className="text-2xl text-[#ec7c6a] group-hover:text-white" />
+              <RiLogoutBoxLine
+                className={`text-2xl ${
+                  activeItem === "logout"
+                    ? "text-white"
+                    : "text-[#ec7c6a] group-hover:text-white"
+                }`}
+              />
             </a>
-          </li>
+          </button>
         </ul>
       </div>
     </div>

@@ -2,51 +2,78 @@ import Card from "../Card";
 import { RiArrowDownSLine, RiSearch2Line } from "react-icons/ri";
 import { useContext, useState, useEffect } from "react";
 import PaginationButtons from "../../PaginationButtons";
+import { ProductContext } from "../../../Context/ProductContext";
 
 function ProductList({ data1 }) {
-  const totalItems = 8;
   const [filteredList, setFilteredList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [searchValue, setSearchValue] = useState("");
+
 
   const filter = (e) => {
-    if (e == undefined) {
-      if (currentPage == 2) {
-        setFilteredList([...data1].splice(8, totalItems));
-      } else {
-        setFilteredList([...data1].splice(0, totalItems));
-      }
-      setTotalPages(data1.length / totalItems);
-    } else {
-      setFilteredList(
-        data1.filter((f) => f.tipe.toLowerCase().includes(e.target.value))
-      );
+    const value = e?.target?.value || "";
+    setSearchValue(value.toLowerCase());
+  
+    if (!e) {
+      setCurrentPage(0);
     }
+    setFilteredList(
+      data1.filter((f) => f.productName.toLowerCase().includes(value))
+    );
   };
+  
 
   useEffect(() => {
-    filter();
-  }, [data1, currentPage]);
+    setFilteredList([...data1]);
+  }, [data1]);
+
+  useEffect(() => {
+    setFilteredList(data1); // Restaurar la lista original
+  
+    const filteredItems = data1.filter((f) =>
+      f.productName.toLowerCase().includes(searchValue)
+    );
+  
+    const totalItems = filteredItems.length;
+    setTotalPages(Math.ceil(totalItems / itemsPerPage));
+    setCurrentPage(0);
+  
+    setFilteredList(filteredItems.slice(0, itemsPerPage)); // Establecer la lista filtrada inicial
+  }, [data1, itemsPerPage, searchValue]);
+
+  useEffect(() => {
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  setFilteredList(data1.slice(startIndex, endIndex));
+}, [currentPage, itemsPerPage, data1]);
+  
 
   return (
     <div>
-      <div className="flex items-center justify-between  mb-20">
-        <h2 className="text-xl text-gray-300 ">Choose Dishes</h2>
+      <div className="flex items-center justify-between mb-20">
+        <h2 className="text-xl text-gray-300">Choose Dishes</h2>
         <form className="mr-[40px]">
           <div className="w-full relative">
             <RiSearch2Line className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               onChange={filter}
-              className="bg-[#1F1D2B] w-full py-2 pl-8 pr-4 rounded-lg text-gray-300 outlie-none"
+              className="bg-[#1F1D2B] w-full py-2 pl-8 pr-4 rounded-lg text-gray-300 outline-none"
               placeholder="Search"
             />
           </div>
         </form>
-        <button className="flex items-center gap-4 text-gray-300 bg-[#1F1D2B] py-2 px-4 rounded-lg">
-          <RiArrowDownSLine />
-          Dine in
-        </button>
+        <select
+          value={itemsPerPage}
+          onChange={(e) => setItemsPerPage(Number(e.target.value))}
+          className="text-gray-300 bg-[#1F1D2B] py-2 px-4 rounded-lg"
+        >
+          <option value={6}>Show 6</option>
+          <option value={10}>Show 10</option>
+          <option value={50}>Show 50</option>
+        </select>
       </div>
       <div className="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14">
         {filteredList.map((data) => (

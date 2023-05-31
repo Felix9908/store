@@ -5,17 +5,17 @@ import { CartContext } from "../../Context/CartContext";
 function ProductCarrito({ item }) {
   const { removeFromCart, increaseAmount, decreaseAmount } =
     useContext(CartContext);
+  const imagePath = item.imagePath.replace(/\\/g, "/");
 
   return (
     <div>
-      {/* Product */}
       <div className="">
         <div className="bg-[#262837] p-4 rounded-xl mb-4">
           <div className="grid grid-cols-6">
-            {/* Description product*/}
             <div className="col-span-3 pb-3 flex items-center gap-x-4">
               <img
-                src={item.img}
+                src={`http://localhost:9999/${imagePath}`}
+                alt={item.nameImg}
                 className="w-10 h-10 object-cover rounded-full"
               />
               <div>
@@ -45,14 +45,12 @@ function ProductCarrito({ item }) {
               </div>
             </div>
 
-            {/* Price */}
             <div className="ml-14 mt-4 w-[70px] h-[20px]">
               <span>{`$ ${parseFloat(item.price * item.amount).toFixed(
                 2
               )}`}</span>
             </div>
           </div>
-          {/* Note */}
           <div className="grid grid-cols-7 items-center gap-2">
             <form className="col-span-5">
               <input

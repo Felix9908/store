@@ -34,32 +34,34 @@ function SideBar(props) {
               logo
             </h1>
           </li>
-          <li className={`${
-                activeItem === "home"
-                  ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
-                  : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
-              }`}>
+          <li
+            className={`${
+              activeItem === "home"
+                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
+            }`}
+          >
             <Link
               to={`/`}
               className={`${
                 activeItem === "home"
                   ? "bg-[#ec7c6a]"
-                  : "bg-[#262837] hover:bg-[#ec7c6a]"
+                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
               } p-4 flex justify-center rounded-xl`}
               onClick={() => handleItemClick("home")}
             >
-              <RiHome6Line className={`text-2xl ${
+              <RiHome6Line
+                className={`text-2xl ${
                   activeItem === "home"
                     ? "text-white"
                     : "text-[#ec7c6a] group-hover:text-white"
-                }`} />
+                }`}
+              />
             </Link>
           </li>
 
           <li
-            className={`${
-              logged ? "" : "hidden"
-            } ${
+            className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${
               activeItem === "percent"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
@@ -85,9 +87,7 @@ function SideBar(props) {
           </li>
 
           <li
-            className={`${
-              logged ? "" : "hidden"
-            } ${
+            className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${
               activeItem === "pieChart"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
@@ -113,16 +113,14 @@ function SideBar(props) {
           </li>
 
           <li
-            className={`${
-              logged ? "" : "hidden"
-            } ${
+            className={`${logged ? "" : "hidden"} ${
               activeItem === "mail"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
-            <a
-              href="#"
+            <Link
+              to={`/mail`}
               className={`${
                 activeItem === "mail"
                   ? "bg-[#ec7c6a]"
@@ -137,13 +135,11 @@ function SideBar(props) {
                     : "text-[#ec7c6a] group-hover:text-white"
                 }`}
               />
-            </a>
+            </Link>
           </li>
 
           <li
-            className={`${
-              logged ? "" : "hidden"
-            } ${
+            className={`${logged ? "" : "hidden"} ${
               activeItem === "notification"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
@@ -169,9 +165,7 @@ function SideBar(props) {
           </li>
 
           <li
-            className={`${
-              logged && privUser1 === "Admin"? "" : "hidden"
-            } ${
+            className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${
               activeItem === "settings"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
@@ -180,7 +174,7 @@ function SideBar(props) {
             <Link
               to={`/Settings`}
               className={`${
-                activeItem === "settings" 
+                activeItem === "settings"
                   ? "bg-[#ec7c6a]"
                   : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
               } p-4 flex justify-center rounded-xl`}
@@ -188,7 +182,7 @@ function SideBar(props) {
             >
               <RiSettings4Line
                 className={`text-2xl ${
-                  activeItem === "settings" 
+                  activeItem === "settings"
                     ? "text-white"
                     : "text-[#ec7c6a] group-hover:text-white"
                 }`}

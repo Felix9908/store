@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { ProductContext } from "../Context/ProductContext";
 import { useNavigate } from "react-router-dom";
 
@@ -32,9 +32,9 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center flex-col justify-center h-screen">
       <form
-        className="bg-[#161827] shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-[#161827] shadow-md rounded rounded-xl px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">

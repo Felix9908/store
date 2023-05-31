@@ -34,10 +34,8 @@ const UserList = () => {
           <tr>
             <th className="py-2 px-4 border">Username</th>
             <th className="py-2 px-4 border">Password</th>
-            <th className="py-2 px-4 border">Complete Name</th>
+            <th className="py-2 px-4 border">fullName</th>
             <th className="py-2 px-4 border">Email</th>
-            <th className="py-2 px-4 border">Phone Number</th>
-            <th className="py-2 px-4 border">Address</th>
             <th className="py-2 px-4 border">Privilege</th>
           </tr>
         </thead>
@@ -46,10 +44,8 @@ const UserList = () => {
             <tr key={user.id}>
               <td className="py-2 px-4 border">{user.user}</td>
               <td className="py-2 px-4 border">{user.password}</td>
-              <td className="py-2 px-4 border">{user.completeName}</td>
+              <td className="py-2 px-4 border">{user.fullName}</td>
               <td className="py-2 px-4 border">{user.email}</td>
-              <td className="py-2 px-4 border">{user.phoneNumber}</td>
-              <td className="py-2 px-4 border">{user.address}</td>
               <td className="py-2 px-4 border">{user.privUser}</td>
               <td className="py-2 px-4 border">
                 <button

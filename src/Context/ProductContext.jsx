@@ -57,6 +57,7 @@ const ProductProvider = ({ children }) => {
             setLogged(true);
             sessionStorage.setItem("token", res.data.token);
             sessionStorage.setItem("privUser", res.data.userData[0].privUser);
+            sessionStorage.setItem("dataUser", res.data.userData[0].fullName);
           } else {
             setShowAlert(true);
             setAlertMessage(res.data.msg);
@@ -77,19 +78,19 @@ const ProductProvider = ({ children }) => {
   };
 
   const addProduct = async ({ formData }) => {
-    console.log(formData);
     try {
-      const response = await axios.post(
-        "http://localhost:9999/create",
-        formData,
-        {
+      await axios
+        .post("http://localhost:9999/create", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           },
-        }
-      );
-      console.log(response);
+        })
+        .then((res) => {
+          setShowAlert(true);
+          setAlertMessage(res.data);
+          setColorAlert("bg-green-500");
+        });
     } catch (error) {
       console.log(error);
     }
@@ -98,9 +99,15 @@ const ProductProvider = ({ children }) => {
   const createUser = async ({ user }) => {
     try {
       await axios.post("http://localhost:9999/createUser", user).then((res) => {
-        setShowAlert(true);
-        setAlertMessage(res.data);
-        setColorAlert("bg-green-500");
+        if (res.data === "Product uploaded successfully") {
+          setShowAlert(true);
+          setAlertMessage(res.data);
+          setColorAlert("bg-green-500");
+        } else if (res.data === "Error inserting data into SQL table") {
+          setShowAlert(true);
+          setAlertMessage(res.data);
+          setColorAlert("bg-red-500");
+        }
       });
     } catch (err) {
       console.log(err);
@@ -113,6 +120,7 @@ const ProductProvider = ({ children }) => {
         if (res.data.msg == "Has sido desconectado") {
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("privUser");
+          sessionStorage.removeItem("dataUser");
           setLogged(false);
         }
       });

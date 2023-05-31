@@ -8,7 +8,7 @@ function ProductList({ data1 }) {
   const [filteredList, setFilteredList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const [searchValue, setSearchValue] = useState("");
 
 
@@ -70,12 +70,12 @@ function ProductList({ data1 }) {
           onChange={(e) => setItemsPerPage(Number(e.target.value))}
           className="text-gray-300 bg-[#1F1D2B] py-2 px-4 rounded-lg"
         >
-          <option value={6}>Show 6</option>
+          <option value={8}>Show 8</option>
           <option value={10}>Show 10</option>
           <option value={50}>Show 50</option>
         </select>
       </div>
-      <div className="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14">
         {filteredList.map((data) => (
           <Card key={data.id} data={data} />
         ))}

@@ -1,13 +1,14 @@
-import { RiAddFill, RiSubtractLine } from "react-icons/ri";
+import { RiAddFill, RiSubtractLine, RiEyeLine } from "react-icons/ri";
 import { CartContext } from "../../Context/CartContext";
 import { useContext } from "react";
 import { ProductContext } from "../../Context/ProductContext";
+import { Link } from "react-router-dom";
 
 function Card({ data }) {
   const { addToCart } = useContext(CartContext);
   const { logged, deleteProduct, userData } = useContext(ProductContext);
   const imagePath = data.imagePath.replace(/\\/g, "/");
-  const privUser = sessionStorage.getItem("privUser")
+  const privUser = sessionStorage.getItem("privUser");
   return (
     <div>
       <div className="z-0 relative bg-[#1F1D2B] w-[280px] p-8 rounded-xl overflow-hidden flex flex-col items-center text-gray-300 text-center group">
@@ -21,9 +22,15 @@ function Card({ data }) {
               <RiAddFill className="text-3xl" />
             </div>
           </button>
-          <button className={`${
-            privUser == "Admin" ? "" : "hidden"
-          }`} onClick={() => deleteProduct(data.id)}>
+          <Link to={`/detalles/${data.id}`}>
+            <div className="flex justify-center items-center text-white w-12 h-12 bg-[#ec7c6a]">
+              <RiEyeLine className="text-3xl" />
+            </div>
+          </Link>
+          <button
+            className={`${privUser == "Admin" ? "" : "hidden"}`}
+            onClick={() => deleteProduct(data.id)}
+          >
             <div className="flex justify-center items-center text-white w-12 h-12 bg-red-500">
               <RiSubtractLine className="text-3xl" />
             </div>

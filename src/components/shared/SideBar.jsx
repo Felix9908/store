@@ -113,7 +113,7 @@ function SideBar(props) {
           </li>
 
           <li
-            className={`${logged ? "" : "hidden"} ${
+            className={`${logged && privUser1 !== "Admin"? "" : "hidden"} ${
               activeItem === "mail"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"

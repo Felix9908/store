@@ -3,12 +3,12 @@ import axios from "axios";
 
 function CommentBox({ productId }) {
   const [comment, setComment] = useState("");
-  const [comentEdit, setComentEdit] = useState("")
+  const [comentEdit, setComentEdit] = useState("");
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const clientName = sessionStorage.getItem("dataUser");
 
-  console.log(comentEdit)
+  console.log(comentEdit);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -90,7 +90,7 @@ function CommentBox({ productId }) {
         setComments((prevComments) =>
           prevComments.map((comment) => {
             if (comment.id === commentId) {
-              setEditingCommentId(null)
+              setEditingCommentId(null);
               return { ...comment, text: newText };
             }
             return comment;
@@ -105,62 +105,74 @@ function CommentBox({ productId }) {
   };
 
   return (
-    <div className="flex flex-col items-center mt-8 bg-[#161827] w-[1000px]">
+    <div className="flex flex-col items-center rounded-xl p-5 mt-8 bg-[#161827] w-[1000px]">
       <h3 className="text-lg font-semibold mb-2 text-white">Comments:</h3>
-      <ul className="bg-[#262837] w-[900px]">
-        {comments.map((comment) => (
-          <li key={comment.id} className="mb-4 border-b">
-            <h6 className="text-white">{comment.clientName}</h6>
-            {editingCommentId === comment.id ? (
-              <input
-                onChange={(e)=>{setComentEdit(e.target.value)}}
-                placeholder="Enter your comment"
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-            ) : (
-              <p className="text-gray-700">{comment.text}</p>
-            )}
-            <p className="text-sm text-gray-500">
-              {formatDate(comment.fecha)} at {formatTime(comment.fecha)}
-            </p>
-            <div
-              className={`${clientName === comment.clientName ? "" : "hidden"}`}
-            >
+      {comments.length === 0 ? (
+        <>
+          <p className="text-white text-3xl">No comments yet</p>
+        </>
+      ) : (
+        <ul className="bg-[#262837] w-[900px]">
+          {comments.map((comment) => (
+            <li key={comment.id} className="mb-4 border-b">
+              <h6 className="text-white">{comment.clientName}</h6>
               {editingCommentId === comment.id ? (
-                <div>
-                  <button
-                    onClick={() => handleCommentEdit(comment.id, comentEdit)}
-                    className="text-blue-500 ml-2"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={()=>{setEditingCommentId(null)}}
-                    className="text-red-500 ml-2"
-                  >
-                  Cancel
-                  </button>
-              </div>
+                <input
+                  onChange={(e) => {
+                    setComentEdit(e.target.value);
+                  }}
+                  placeholder="Enter your comment"
+                  className="w-full border border-gray-300 rounded-md p-2"
+                />
               ) : (
-                <div>
-                  <button
-                    onClick={() => setEditingCommentId(comment.id)}
-                    className="text-blue-500 ml-2"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleCommentDelete(comment.id)}
-                    className="text-red-500 ml-2"
-                  >
-                    Delete
-                  </button>
-                </div>
+                <p className="text-gray-700">{comment.text}</p>
               )}
-            </div>
-          </li>
-        ))}
-      </ul>
+              <p className="text-sm text-gray-500">
+                {formatDate(comment.fecha)} at {formatTime(comment.fecha)}
+              </p>
+              <div
+                className={`${
+                  clientName === comment.clientName ? "" : "hidden"
+                }`}
+              >
+                {editingCommentId === comment.id ? (
+                  <div>
+                    <button
+                      onClick={() => handleCommentEdit(comment.id, comentEdit)}
+                      className="text-blue-500 ml-2"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => {
+                        setEditingCommentId(null);
+                      }}
+                      className="text-red-500 ml-2"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      onClick={() => setEditingCommentId(comment.id)}
+                      className="text-blue-500 ml-2"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleCommentDelete(comment.id)}
+                      className="text-red-500 ml-2"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
       <form onSubmit={handleCommentSubmit} className="mt-4">
         <textarea
           value={comment}

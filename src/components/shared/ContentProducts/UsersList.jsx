@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { ProductContext } from "../../../Context/ProductContext";
+import ButtonDelete from './ButtonDelete'
 
 const UserList = () => {
   const { setAlertMessage, setShowAlert, setColorAlert, fetchUsers, users } =
@@ -17,9 +17,9 @@ const UserList = () => {
         .delete(`http://localhost:9999/deleteUser/${id}`)
         .then((res) => {
           setShowAlert(true);
-          setAlertMessage(res.data); // Accede a la propiedad 'data' de la respuesta
+          setAlertMessage(res.data); 
           setColorAlert("bg-green-500");
-          fetchUsers(); // Vuelve a obtener la lista de usuarios después de eliminar uno
+          fetchUsers();
         });
     } catch (err) {
       console.error(err);
@@ -48,14 +48,7 @@ const UserList = () => {
               <td className="py-2 px-4 border">{user.email}</td>
               <td className="py-2 px-4 border">{user.privUser}</td>
               <td className="py-2 px-4 border">
-                <button
-                  onClick={() => {
-                    deleteUser(user.id);
-                  }}
-                  className="bg-red-500 p-2 rounded-xl"
-                >
-                  <RiDeleteBinLine className="text-xl" />
-                </button>
+                <ButtonDelete handleDelete={deleteUser} id={user.id}/>
               </td>
             </tr>
           ))}

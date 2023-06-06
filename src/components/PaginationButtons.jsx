@@ -45,8 +45,9 @@ const PaginationButtons = ({ totalPages, setCurrentPage }) => {
           </samp>
         }
         containerClassName="flex items-center justify-center mt-8 mb-4"
-        pageClassName="block border- border-solid border-lightGray hover:bg-lightGray w-10 h-10 flex items-center justify-center rounded-md mr-4"
+        pageClassName="block border- border-solid border-lightGray hover:bg-lightGray w-10 h-10 flex items-center justify-center rounded-md m-2"
         activeClassName="bg-purple text-white"
+        pageLinkClassName="p-4"
       />
     </motion.div>
   );

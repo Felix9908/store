@@ -3,6 +3,8 @@ import Header from "../components/shared/Header";
 import CreateProduct from "../components/shared/ContentProducts/CreateProduct";
 import UsersList from "../components/shared/ContentProducts/UsersList";
 import CreateUser from "./CreateUser";
+import ContactUsList from "../components/shared/ContentProducts/ContactUsList";
+import ButtonSettings from "../components/shared/ContentProducts/ButtonSettings";
 
 function Settings() {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,6 +21,8 @@ function Settings() {
       return <UsersList />;
     } else if (showSettings === "CreateUser") {
       return <CreateUser />;
+    } else if (showSettings === "ContactUsList") {
+      return <ContactUsList />;
     } else {
       return null;
     }
@@ -30,36 +34,30 @@ function Settings() {
         <div className="lg:col-span-8 md:p-8">
           <Header title="Settings" />
           <nav className="text-gray-300 flex items-center justify-between md:justify-start md:gap-8 border-b mb-6">
-            <button
-              onClick={() => setShowSettings("CreateProduct")}
-              className={`relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute hover:before:bg-[#ec7c6a] before:left-0 before:rounded-full before:bottom-[-2px] hover:text-[#ec7c6a] transition-all ${
-                showSettings === "CreateProduct"
-                  ? "text-[#ec7c6a] before:bg-[#ec7c6a]"
-                  : ""
-              }`}
-            >
-              Create product
-            </button>
-            <button
-              onClick={() => setShowSettings("UsersList")}
-              className={`relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute hover:before:bg-[#ec7c6a] before:left-0 before:rounded-full before:bottom-[-2px] hover:text-[#ec7c6a] transition-all ${
-                showSettings === "UsersList"
-                  ? "text-[#ec7c6a] before:bg-[#ec7c6a]"
-                  : ""
-              }`}
-            >
-              Users list
-            </button>
-            <button
-              onClick={() => setShowSettings("CreateUser")}
-              className={`relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute hover:before:bg-[#ec7c6a] before:left-0 before:rounded-full before:bottom-[-2px] hover:text-[#ec7c6a] transition-all ${
-                showSettings === "CreateUser"
-                  ? "text-[#ec7c6a] before:bg-[#ec7c6a]"
-                  : ""
-              }`}
-            >
-              Create user
-            </button>
+            <ButtonSettings
+              name="Create product"
+              type="CreateProduct"
+              showSettings={showSettings}
+              setShowSettings={setShowSettings}
+            />
+            <ButtonSettings
+              name="Users list"
+              type="UsersList"
+              showSettings={showSettings}
+              setShowSettings={setShowSettings}
+            />
+            <ButtonSettings
+              name="Create user"
+              type="CreateUser"
+              showSettings={showSettings}
+              setShowSettings={setShowSettings}
+            />
+            <ButtonSettings
+              name="Client messages"
+              type="ContactUsList"
+              showSettings={showSettings}
+              setShowSettings={setShowSettings}
+            />
           </nav>
           {renderSettingsContent()}
         </div>

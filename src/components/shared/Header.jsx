@@ -1,14 +1,12 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { SidebarContext } from "../../Context/SidebarContext";
-import { CartContext } from "../../Context/CartContext";
 import Tabs from "./ContentProducts/Tabs";
 import { ProductContext } from "../../Context/ProductContext";
 import Car from "./ContentProducts/Car";
 import { useState } from "react";
 
 function Header({ title }) {
-  const { grill, coldDishes, hotDishes, soup, setData, products } =
+  const { UtilesDelHogar, products, Perfumeria, Zapatos, Ropa, Aceo } =
     useContext(ProductContext);
   const { logged } = useContext(ProductContext);
   const [activeTab, setActiveTab] = useState("");
@@ -49,30 +47,35 @@ function Header({ title }) {
             to={products}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
-            name="All dishes"
-            
+            name="Todos"
           />
           <Tabs
-            to={hotDishes}
-            name="Hot dishes"
+            to={UtilesDelHogar}
+            name="Utiles del hogar"
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
           <Tabs
-            to={coldDishes}
-            name="Cold dishes"
+            to={Zapatos}
+            name="Calzado"
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
           <Tabs
-            to={soup}
-            name="Soup"
+            to={Ropa}
+            name="Ropa"
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
           <Tabs
-            to={grill}
-            name="Grill"
+            to={Aceo}
+            name="Aceo"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <Tabs
+            to={Perfumeria}
+            name="Perfumería"
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />

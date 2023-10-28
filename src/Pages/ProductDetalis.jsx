@@ -8,7 +8,7 @@ import CommentBox from "../components/shared/ContentProducts/CommentBox";
 
 function ProductDetalis() {
   const { addToCart } = useContext(CartContext);
-  const { products } = useContext(ProductContext);
+  const { products, logged } = useContext(ProductContext);
   const { id } = useParams();
   const product = products.find((item) => item.id === parseInt(id));
 
@@ -47,7 +47,9 @@ function ProductDetalis() {
               <p className="mb-8">Description: {description}</p>
               <button
                 onClick={() => addToCart(product, product.id)}
-                className="bg- py-4 px-8 bg-[#ec7c6a] text-white"
+                className={` ${
+                  logged ? "" : "hidden"
+                } bg- py-4 px-8 bg-[#ec7c6a] text-white`}
               >
                 Add to cart
               </button>

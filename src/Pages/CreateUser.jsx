@@ -7,8 +7,8 @@ const CreateUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [privUser, setPrivUser] = useState("Client");
-  const { createUser, setAlertMessage, setShowAlert, setColorAlert } =
+  const [privUser, setPrivUser] = useState("Cliente");
+  const { createUser, setAlertMessage, setShowAlert, setColorAlert, setAlertTitulo} =
     useContext(ProductContext);
 
   const privUser1 = sessionStorage.getItem("privUser");
@@ -26,15 +26,16 @@ const CreateUser = () => {
       setShowAlert(true);
       setAlertMessage("incorrect password");
       setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
     } else {
-      try { 
+      try {
         createUser({ user });
         setUsername("");
         setFullName("");
         setEmail("");
         setPassword("");
         setRepeatPassword("");
-        setPrivUser("Client");
+        setPrivUser("Cliente");
       } catch (err) {
         console.log(err);
       }
@@ -42,12 +43,16 @@ const CreateUser = () => {
   };
 
   return (
-    <div className="flex items-center flex-col justify-center h-screen">
-      <h4 className="text-white text-5xl">Creaet acount</h4>{" "}
+    <div className="flex items-center flex-col justify-center h-screen ">
       <form
         onSubmit={handleSubmit}
-        className="max-w-sm mx-auto mt-4 rounded-xl bg-[#161827] p-10"
+        className=" rounded-xl bg-[#161827] p-10 "
       >
+        <div className="flex items-center justify-center">
+          <h6 className="text-white text-4xl font-bold m-2">
+            Crear cuenta
+          </h6>
+        </div>
         <div className="mb-4">
           <label
             className="block mb-2 text-sm font-medium text-gray-700"

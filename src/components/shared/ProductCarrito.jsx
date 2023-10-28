@@ -1,10 +1,15 @@
 import { RiDeleteBin6Line, RiAddLine, RiSubtractLine } from "react-icons/ri";
 import { useContext } from "react";
 import { CartContext } from "../../Context/CartContext";
+import { ProductContext } from "../../Context/ProductContext";
 
 function ProductCarrito({ item }) {
   const { removeFromCart, increaseAmount, decreaseAmount } =
     useContext(CartContext);
+  const { dataDiscount } = useContext(ProductContext);
+  const numberValue = parseInt(dataDiscount.CatnDescuento, 10);
+  const numeroConvertido = numberValue / 100;
+
   const imagePath = item.imagePath.replace(/\\/g, "/");
 
   return (
@@ -20,7 +25,22 @@ function ProductCarrito({ item }) {
               />
               <div>
                 <h5 className="text-sm">{item.description}</h5>
-                <p className="text-md text-gray-500">${item.price}</p>
+                <h6
+                  className={`text-md text-gray-500 flex ${
+                    dataDiscount.estadoDescuento == "Activated" ? "text-red-300" : ""
+                  }`}
+                >
+                  ${item.price}{" "}
+                  <p
+                    className={`ml-1 ${
+                      dataDiscount.estadoDescuento == "Activated"
+                        ? ""
+                        : "hidden"
+                    } text-blue-200`}
+                  >
+                    -{numberValue}%
+                  </p>
+                </h6>
               </div>
             </div>
             {/* Qty */}
@@ -45,20 +65,22 @@ function ProductCarrito({ item }) {
               </div>
             </div>
 
-            <div className="ml-14 mt-4 w-[70px] h-[20px]">
-              <span>{`$ ${parseFloat(item.price * item.amount).toFixed(
-                2
-              )}`}</span>
+            <div className="ml-14 mt-4 w-[70px] text-green-400 h-[20px]">
+              <span>{`$ ${
+                parseFloat(item.price * item.amount).toFixed(2) -
+                parseFloat(item.price * item.amount).toFixed(2) *
+                  numeroConvertido
+              }`}</span>
             </div>
           </div>
           <div className="grid grid-cols-7 items-center gap-2">
-            <form className="col-span-5">
+            {/* <form className="col-span-5">
               <input
                 type="text"
                 className="bg-[#1F1D2B] py-2 px-4 rounded-lg outline-none"
                 placeholder="Order note..."
               />
-            </form>
+            </form> */}
             <div className="col-span-1 text-center">
               <button
                 onClick={() => removeFromCart(item.id)}

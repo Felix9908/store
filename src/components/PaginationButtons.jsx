@@ -7,6 +7,7 @@ const PaginationButtons = ({ totalPages, setCurrentPage }) => {
     setCurrentPage(selected);
   };
 
+
   const paginationVariants = {
     hidden: {
       opacity: 0,
@@ -28,6 +29,7 @@ const PaginationButtons = ({ totalPages, setCurrentPage }) => {
       variants={paginationVariants}
       initial="hidden"
       animate="visible"
+      className={`${totalPages <= 1 ? "hidden" : ""}`}
     >
       <ReactPaginate
         breakLabel={<span className="mr-4">...</span>}

@@ -3,14 +3,19 @@ import axios from "axios";
 import { ProductContext } from "../../../Context/ProductContext";
 
 const CreateProduct = () => {
-  const { addProduct, setAlertMessage, setShowAlert,setColorAlert  } = useContext(ProductContext);
+  const {
+    addProduct,
+    setAlertMessage,
+    setShowAlert,
+    setColorAlert,
+    setAlertTitulo,
+  } = useContext(ProductContext);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
   const [available, setAvailable] = useState("");
   const [image, setImage] = useState(null);
-  
 
   const handleInputChange = (e) => {
     switch (e.target.name) {
@@ -52,27 +57,33 @@ const CreateProduct = () => {
     if (!image) {
       setAlertMessage("The photo is missing on the form");
       setShowAlert(true);
-      setColorAlert("bg-red-500")
-    } else if(!productName){
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
+    } else if (!productName) {
       setAlertMessage("The product name is missing on the form");
       setShowAlert(true);
-      setColorAlert("bg-red-500")
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
     } else if (!type) {
       setAlertMessage("The type is missing on the form");
       setShowAlert(true);
-      setColorAlert("bg-red-500")
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
     } else if (!description) {
       setAlertMessage("The description is missing on the form");
       setShowAlert(true);
-      setColorAlert("bg-red-500")
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
     } else if (!price) {
       setAlertMessage("The price is missing on the form");
       setShowAlert(true);
-      setColorAlert("bg-red-500")
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
     } else if (!available) {
       setAlertMessage("The available is missing on the form");
       setShowAlert(true);
-      setColorAlert("bg-red-500")
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
     } else {
       try {
         addProduct({ formData });
@@ -118,10 +129,12 @@ const CreateProduct = () => {
           onChange={handleInputChange}
           className="m-[5px]"
         >
-          <option value="grill">grill</option>
-          <option value="coldDishes">coldDishes</option>
-          <option value="hotDishes">hotDishes</option>
-          <option value="soup">soup</option>
+          <option value="">Select Type</option>
+          <option value="UtilesDelHogar">Utiles del hogar</option>
+          <option value="Perfumeria">Perfumeria</option>
+          <option value="Zapatos">Zapatos</option>
+          <option value="Ropa">Ropa</option>
+          <option value="Aceo">Aceo</option>
         </select>
         <input
           type="number"

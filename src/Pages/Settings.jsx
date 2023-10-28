@@ -5,6 +5,7 @@ import UsersList from "../components/shared/ContentProducts/UsersList";
 import CreateUser from "./CreateUser";
 import ContactUsList from "../components/shared/ContentProducts/ContactUsList";
 import ButtonSettings from "../components/shared/ContentProducts/ButtonSettings";
+import ChangeDiscount from "../components//shared/ContentProducts/ChangeDiscount";
 
 function Settings() {
   const [showMenu, setShowMenu] = useState(false);
@@ -23,7 +24,9 @@ function Settings() {
       return <CreateUser />;
     } else if (showSettings === "ContactUsList") {
       return <ContactUsList />;
-    } else {
+    } else if(showSettings === "changeDiscount"){
+      return <ChangeDiscount/>;
+    }else {
       return null;
     }
   };
@@ -55,6 +58,12 @@ function Settings() {
             <ButtonSettings
               name="Client messages"
               type="ContactUsList"
+              showSettings={showSettings}
+              setShowSettings={setShowSettings}
+            />
+            <ButtonSettings
+              name="Activar descuento"
+              type="changeDiscount"
               showSettings={showSettings}
               setShowSettings={setShowSettings}
             />

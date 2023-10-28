@@ -3,18 +3,18 @@ import { ProductContext } from "../../Context/ProductContext";
 import { Link } from "react-router-dom";
 import {
   RiHome6Line,
-  RiPercentLine,
   RiPieChartLine,
   RiMailLine,
   RiNotificationLine,
   RiSettings4Line,
   RiLogoutBoxLine,
+  RiHandbagLine,
 } from "react-icons/ri";
 
 function SideBar(props) {
   const { logout, logged } = useContext(ProductContext);
   const { showMenu } = props;
-  const [activeItem, setActiveItem] = useState("");
+  const [activeItem, setActiveItem] = useState("home");
   const privUser1 = sessionStorage.getItem("privUser");
 
   const handleItemClick = (item) => {
@@ -61,14 +61,14 @@ function SideBar(props) {
           </li>
 
           <li
-            className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${
+            className={`${logged ? "" : "hidden"} ${
               activeItem === "percent"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
-            <a
-              href="#"
+            <Link
+              to='/buyList'
               className={`${
                 activeItem === "percent"
                   ? "bg-[#ec7c6a]"
@@ -76,17 +76,17 @@ function SideBar(props) {
               } p-4 flex justify-center rounded-xl`}
               onClick={() => handleItemClick("percent")}
             >
-              <RiPercentLine
+              <RiHandbagLine
                 className={`text-2xl ${
                   activeItem === "percent"
                     ? "text-white"
                     : "text-[#ec7c6a] group-hover:text-white"
                 }`}
               />
-            </a>
+            </Link>
           </li>
 
-          <li
+          {/* <li
             className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${
               activeItem === "pieChart"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
@@ -110,7 +110,7 @@ function SideBar(props) {
                 }`}
               />
             </a>
-          </li>
+          </li> */}
 
           <li
             className={`${logged && privUser1 !== "Admin"? "" : "hidden"} ${
@@ -138,7 +138,7 @@ function SideBar(props) {
             </Link>
           </li>
 
-          <li
+          {/* <li
             className={`${logged ? "" : "hidden"} ${
               activeItem === "notification"
                 ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
@@ -162,7 +162,7 @@ function SideBar(props) {
                 }`}
               />
             </a>
-          </li>
+          </li> */}
 
           <li
             className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${

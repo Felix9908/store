@@ -11,11 +11,10 @@ function ProductList({ data1 }) {
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [searchValue, setSearchValue] = useState("");
 
-
   const filter = (e) => {
     const value = e?.target?.value || "";
     setSearchValue(value.toLowerCase());
-  
+
     if (!e) {
       setCurrentPage(0);
     }
@@ -23,7 +22,6 @@ function ProductList({ data1 }) {
       data1.filter((f) => f.productName.toLowerCase().includes(value))
     );
   };
-  
 
   useEffect(() => {
     setFilteredList([...data1]);
@@ -31,24 +29,23 @@ function ProductList({ data1 }) {
 
   useEffect(() => {
     setFilteredList(data1); // Restaurar la lista original
-  
+
     const filteredItems = data1.filter((f) =>
       f.productName.toLowerCase().includes(searchValue)
     );
-  
+
     const totalItems = filteredItems.length;
     setTotalPages(Math.ceil(totalItems / itemsPerPage));
     setCurrentPage(0);
-  
+
     setFilteredList(filteredItems.slice(0, itemsPerPage)); // Establecer la lista filtrada inicial
   }, [data1, itemsPerPage, searchValue]);
 
   useEffect(() => {
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  setFilteredList(data1.slice(startIndex, endIndex));
-}, [currentPage, itemsPerPage, data1]);
-  
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setFilteredList(data1.slice(startIndex, endIndex));
+  }, [currentPage, itemsPerPage, data1]);
 
   return (
     <div>
@@ -75,10 +72,12 @@ function ProductList({ data1 }) {
           <option value={50}>Show 50</option>
         </select>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14">
-        {filteredList.map((data) => (
-          <Card key={data.id} data={data} />
-        ))}
+      <div className="flex items-center justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14">
+          {filteredList.map((data) => (
+            <Card key={data.id} data={data} />
+          ))}
+        </div>
       </div>
       <PaginationButtons
         totalPages={totalPages}

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { ProductContext } from "../../../Context/ProductContext";
 
 function CommentBox({ productId }) {
   const [comment, setComment] = useState("");
@@ -7,8 +8,7 @@ function CommentBox({ productId }) {
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const clientName = sessionStorage.getItem("dataUser");
-
-  console.log(comentEdit);
+  const { logged } = useContext(ProductContext);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -47,6 +47,7 @@ function CommentBox({ productId }) {
         productId,
         clientName,
         text: comment.trim(),
+        formattedFecha: Date(),
       };
       try {
         await axios
@@ -106,10 +107,10 @@ function CommentBox({ productId }) {
 
   return (
     <div className="flex flex-col items-center rounded-xl p-5 mt-8 bg-[#161827] w-[1000px]">
-      <h3 className="text-lg font-semibold mb-2 text-white">Comments:</h3>
+      <h3 className="text-lg font-semibold mb-2 text-white">Comentarios:</h3>
       {comments.length === 0 ? (
         <>
-          <p className="text-white text-3xl">No comments yet</p>
+          <p className="text-white text-3xl">No hay comentarios aun</p>
         </>
       ) : (
         <ul className="bg-[#262837] w-[900px]">
@@ -173,7 +174,10 @@ function CommentBox({ productId }) {
           ))}
         </ul>
       )}
-      <form onSubmit={handleCommentSubmit} className="mt-4">
+      <form
+        onSubmit={handleCommentSubmit}
+        className={`mt-4 ${logged ? "" : "hidden"}`}
+      >
         <textarea
           value={comment}
           onChange={handleCommentChange}

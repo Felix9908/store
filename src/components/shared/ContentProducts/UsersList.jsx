@@ -29,7 +29,7 @@ const UserList = () => {
   return (
     <div className="max-w-[1300px] mx-auto text-white shadow-md rounded-md  p-4">
       <h1 className="text-2xl font-bold mb-4">User List</h1>
-      <table className="w-full border-collapse">
+      {users.lengrh == 0 ? <><h6>Error al cargar los usuarios</h6></> :<table className="w-full border-collapse">
         <thead>
           <tr>
             <th className="py-2 px-4 border">Username</th>
@@ -42,7 +42,7 @@ const UserList = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td className="py-2 px-4 border">{user.user}</td>
+              <td className="py-2 px-4 border">{user.username}</td>
               <td className="py-2 px-4 border">{user.password}</td>
               <td className="py-2 px-4 border">{user.fullName}</td>
               <td className="py-2 px-4 border">{user.email}</td>
@@ -53,7 +53,7 @@ const UserList = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>}
     </div>
   );
 };

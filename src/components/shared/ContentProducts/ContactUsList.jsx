@@ -15,7 +15,7 @@ function ContactUsList() {
   const loadMessage = async () => {
     try {
       await axios
-        .get("http://localhost:9999/contactUs")
+        .get("http://localhost:9999/contactUsData")
         .then((response) => {
           setContacts(response.data);
         })
@@ -57,10 +57,10 @@ function ContactUsList() {
               className="flex items-center mb-4 overflow-hidden"
             >
               <div className="bg-white rounded-lg shadow w-[800px] p-6">
-                <p className="text-lg font-medium mb-2">{contact.clientName}</p>
+                <p className="text-lg font-medium mb-2 ">{contact.name}</p>
                 <p className="text-gray-600 mb-2">{contact.email}</p>
                 <p className="text-gray-800 inline-block max-w-full ">
-                  {contact.text}
+                  {contact.message}
                 </p>
               </div>
               <ButtonDelete handleDelete={deleteMessage} id={contact.id} />

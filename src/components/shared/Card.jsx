@@ -47,7 +47,7 @@ function Card({ data }) {
 
         <div>
           <img
-            src={`http://localhost:9999/${imagePath}`}
+            src={`https://back-endstore-production.up.railway.app/${imagePath}`}
             alt={data.nameImg}
             className="w-[280px] h-[140px] md:h-[200px]  shadow-2xl"
           />

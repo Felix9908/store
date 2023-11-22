@@ -42,7 +42,7 @@ function ProductDetalis() {
             <div className="flex flex-1 justify-center items-center mb-8 lg:mb-0">
               <img
                 className="max-w-[500px] lg:max-w-xs"
-                src={`http://localhost:9999/${imagePath}`}
+                src={`https://back-endstore-production.up.railway.app/${imagePath}`}
                 alt={productName}
               />
             </div>

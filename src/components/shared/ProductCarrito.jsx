@@ -19,7 +19,7 @@ function ProductCarrito({ item }) {
           <div className="grid grid-cols-6">
             <div className="col-span-3 pb-3 flex items-center gap-x-4">
               <img
-                src={`http://localhost:9999/${imagePath}`}
+                src={`https://back-endstore-production.up.railway.app/${imagePath}`}
                 alt={item.nameImg}
                 className="w-10 h-10 object-cover rounded-full"
               />

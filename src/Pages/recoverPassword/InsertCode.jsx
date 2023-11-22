@@ -10,7 +10,8 @@ function InsertCode() {
     setShowAlert,
     setAlertMessage,
     setColorAlert,
-    setAlertTitulo
+    setAlertTitulo,
+    changeMode,
   } = useContext(ProductContext);
   const navigate = useNavigate();
   const [code, setCode] = useState("");
@@ -43,7 +44,7 @@ function InsertCode() {
     <div className="flex items-center flex-col justify-center h-screen">
       <form
         onSubmit={handleSubmit}
-        className=" flex items-center flex-col bg-[#161827] shadow-md rounded rounded-xl w-[450px] px-8 pt-4 pb-8 mb-4"
+        className={`flex items-center flex-col ${changeMode ? `bg-gray-500` : `bg-[#161827]`} shadow-md rounded rounded-xl w-[450px] px-8 pt-4 pb-8 mb-4`}
       >
         <div>
           <h6 className="text-white">

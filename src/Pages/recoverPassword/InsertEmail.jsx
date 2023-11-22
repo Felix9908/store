@@ -11,6 +11,7 @@ function InsertEmail() {
     setColorAlert,
     setEmailUser,
     setAlertTitulo,
+    changeMode,
   } = useContext(ProductContext);
   const navigate = useNavigate();
   const [emailRP, setEmailRP] = useState("");
@@ -43,7 +44,9 @@ function InsertEmail() {
   return (
     <div className="flex items-center flex-col justify-center h-screen">
       <form
-        className="flex items-center flex-col bg-[#161827] shadow-md rounded rounded-xl w-[450px] px-8 pt-4 pb-8 mb-4"
+        className={`flex items-center flex-col ${
+          changeMode ? `bg-gray-500` : `bg-[#161827]`
+        } shadow-md rounded rounded-xl w-[450px] px-8 pt-4 pb-8 mb-4`}
         onSubmit={handleSubmit}
       >
         <div className="flex items-center justify-center">

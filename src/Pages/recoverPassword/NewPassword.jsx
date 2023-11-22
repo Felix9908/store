@@ -7,8 +7,13 @@ import { useNavigate } from "react-router-dom";
 function NewPassword() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const { setShowAlert, setAlertMessage, setColorAlert, setAlertTitulo } =
-    useContext(ProductContext);
+  const {
+    setShowAlert,
+    setAlertMessage,
+    setColorAlert,
+    setAlertTitulo,
+    changeMode,
+  } = useContext(ProductContext);
   const navigate = useNavigate();
   const resetPassword = async ({ password, id }) => {
     try {
@@ -44,7 +49,9 @@ function NewPassword() {
     <div className="flex items-center flex-col justify-center h-screen">
       <form
         onSubmit={handleSubmit}
-        className=" flex items-center flex-col bg-[#161827] shadow-md rounded rounded-xl w-[450px] px-8 pt-4 pb-8 mb-4"
+        className={` flex items-center flex-col ${
+          changeMode ? `bg-gray-500` : `bg-[#161827]`
+        }  shadow-md rounded rounded-xl w-[450px] px-8 pt-4 pb-8 mb-4`}
       >
         <div className="flex items-center justify-center">
           <h6 className="text-white text-4xl font-bold m-4">

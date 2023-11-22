@@ -10,6 +10,7 @@ function ProductList({ data1 }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [searchValue, setSearchValue] = useState("");
+  const { changeMode } = useContext(ProductContext);
 
   const filter = (e) => {
     const value = e?.target?.value || "";
@@ -28,7 +29,7 @@ function ProductList({ data1 }) {
   }, [data1]);
 
   useEffect(() => {
-    setFilteredList(data1); // Restaurar la lista original
+    setFilteredList(data1);
 
     const filteredItems = data1.filter((f) =>
       f.productName.toLowerCase().includes(searchValue)
@@ -49,31 +50,42 @@ function ProductList({ data1 }) {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-20">
-        <h2 className="text-xl text-gray-300">Choose Dishes</h2>
+      <div className="flex items-center justify-between mb-10">
+        <h2
+          className={`hidden ${
+            changeMode ? "text-gray-300" : "text-[#000]"
+          } md:inline text-xl `}
+        >
+          Lista de productos
+        </h2>
         <form className="mr-[40px]">
-          <div className="w-full relative">
-            <RiSearch2Line className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
+          <div className="w-full relative  ">
+            <RiSearch2Line className={`absolute left-3 top-1/2 -translate-y-1/2 ${changeMode ? 'text-gray-300':'text-black'}`} />
             <input
               type="text"
               onChange={filter}
-              className="bg-[#1F1D2B] w-full py-2 pl-8 pr-4 rounded-lg text-gray-300 outline-none"
-              placeholder="Search"
+              className={`${
+                changeMode ? "bg-[#1F1D2B] text-gray-300" : "bg-gray-300 text-[#000]"
+              } w-full py-2 pl-8 pr-4 rounded-lg  outline-none`}
+              placeholder="Buscar"
             />
           </div>
         </form>
         <select
           value={itemsPerPage}
           onChange={(e) => setItemsPerPage(Number(e.target.value))}
-          className="text-gray-300 bg-[#1F1D2B] py-2 px-4 rounded-lg"
+          className={`${changeMode ?'bg-[#1F1D2B] text-gray-300':'bg-gray-300 text-black'} w-[1205x] py-2 px-4 rounded-lg`}
         >
-          <option value={8}>Show 8</option>
-          <option value={10}>Show 10</option>
-          <option value={50}>Show 50</option>
+          <option value={8}>Mostrar 8</option>
+          <option value={10}>Mostrar 10</option>
+          <option value={50}>Mostrar 50</option>
         </select>
       </div>
-      <div className="flex items-center justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14">
+      <div className="flex items-center justify-center ">
+        <div
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-14
+"
+        >
           {filteredList.map((data) => (
             <Card key={data.id} data={data} />
           ))}

@@ -8,7 +8,7 @@ function CommentBox({ productId }) {
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const clientName = sessionStorage.getItem("dataUser");
-  const { logged } = useContext(ProductContext);
+  const { logged, changeMode } = useContext(ProductContext);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -27,7 +27,7 @@ function CommentBox({ productId }) {
   const fetchComments = async () => {
     try {
       await axios
-        .get(`http://localhost:9999/comments/${productId}`)
+        .get(`https://back-endstore-production.up.railway.app/comments/${productId}`)
         .then((res) => {
           setComments(res.data);
         });
@@ -51,7 +51,7 @@ function CommentBox({ productId }) {
       };
       try {
         await axios
-          .post("http://localhost:9999/comments/create", newComment)
+          .post("https://back-endstore-production.up.railway.app/comments/create", newComment)
           .then((res) => {
             if (res.status === 200) {
               fetchComments();
@@ -69,7 +69,7 @@ function CommentBox({ productId }) {
   const handleCommentDelete = async (commentId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:9999/comments/delete/${commentId}`
+        `https://back-endstore-production.up.railway.app/comments/delete/${commentId}`
       );
       if (response.status === 200) {
         setComments(comments.filter((comment) => comment.id !== commentId));
@@ -84,7 +84,7 @@ function CommentBox({ productId }) {
   const handleCommentEdit = async (commentId, newText) => {
     try {
       const response = await axios.put(
-        `http://localhost:9999/comments/edit/${commentId}`,
+        `https://back-endstore-production.up.railway.app/comments/edit/${commentId}`,
         { text: newText }
       );
       if (response.status === 200) {
@@ -106,14 +106,18 @@ function CommentBox({ productId }) {
   };
 
   return (
-    <div className="flex flex-col items-center rounded-xl p-5 mt-8 bg-[#161827] w-[1000px]">
-      <h3 className="text-lg font-semibold mb-2 text-white">Comentarios:</h3>
+    <div
+      className={`flex flex-col items-center justify-center  rounded-xl p-5 mt-8 mb-[500px] ${
+        changeMode ? `bg-[#161827]` : `bg-gray-300`
+      } w-[300px] lg:w-full`}
+    >
+      <h3 className={`  text-lg font-semibold mb-2 ${changeMode ?`text-white` : `text-black`}`}>Comentarios:</h3>
       {comments.length === 0 ? (
         <>
-          <p className="text-white text-3xl">No hay comentarios aun</p>
+          <p className={` text-3xl ${changeMode ?`text-white` : `text-black`}`}>No hay comentarios aun</p>
         </>
       ) : (
-        <ul className="bg-[#262837] w-[900px]">
+        <ul className={`${changeMode ?`bg-[#262837] rounded-xl p-5`:`bg-gray-400 rounded-xl p-5`} w-[900px]`}>
           {comments.map((comment) => (
             <li key={comment.id} className="mb-4 border-b">
               <h6 className="text-white">{comment.clientName}</h6>

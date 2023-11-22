@@ -4,8 +4,8 @@ import { ProductContext } from "../../../Context/ProductContext";
 import { CartContext } from "../../../Context/CartContext";
 import { SidebarContext } from "../../../Context/SidebarContext";
 
-function Car(title) {
-  const { logged } = useContext(ProductContext);
+function Car({ title, type }) {
+  const { logged, changeMode } = useContext(ProductContext);
   const { itemAmount } = useContext(CartContext);
   const { setIsOpen } = useContext(SidebarContext);
 
@@ -17,7 +17,11 @@ function Car(title) {
         }}
         className={`absolute ${
           logged && title !== "Settings" ? "" : "hidden"
-        } right-0 top-14 p-2 mr-6 box-content text-gray-300 bg-[#1F1D2B] rounded-full text-xl`}
+        } ${
+          type == "menuMovile"
+            ? ""
+            : `right-0 top-14 p-2 mr-6 box-content ${changeMode ? "text-gray-300 bg-[#1F1D2B]" : "bg-gray-300 text-[#1F1D2B]"} rounded-full text-xl`
+        } `}
       >
         <RiShoppingCart2Line />
         <div

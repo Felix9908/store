@@ -5,13 +5,18 @@ import Header from "../components/shared/Header";
 import { ProductContext } from "../Context/ProductContext";
 
 function Home() {
-  const { data } = useContext(ProductContext);
+  const { data, logged } = useContext(ProductContext);
+
 
   return (
     <div>
-      <main className="lg:pl-32 grid grid-cols-1 lg:grid-cols-8 p-4 pb-20">
+      <main
+        className={`${
+          logged ? "lg:pl-32 lg:grid-cols-8" : ""
+        }  grid grid-cols-1 p-4 pb-20`}
+      >
         <div className="lg:col-span-8 md:p-8">
-          <Header title="Main menu" />
+          <Header title="Menú principal" />
           <ProductList data1={data} />
         </div>
       </main>

@@ -12,7 +12,7 @@ import {
 } from "react-icons/ri";
 
 function SideBar(props) {
-  const { logout, logged } = useContext(ProductContext);
+  const { logout, logged, changeMode } = useContext(ProductContext);
   const { showMenu } = props;
   const [activeItem, setActiveItem] = useState("home");
   const privUser1 = sessionStorage.getItem("privUser");
@@ -23,7 +23,9 @@ function SideBar(props) {
 
   return (
     <div
-      className={`z-20 bg-[#1F1D2B] fixed lg:left-0 top-0 w-28 h-full flex flex-col justify-between py-6 rounded-tr-xl rounded-br-xl transition-all ${
+      className={`${logged ? "" : "hidden"} z-20 ${
+        changeMode ? "bg-[#1F1D2B] " : "bg-gray-500"
+      } fixed lg:left-0 top-0 w-28 h-full flex flex-col justify-between py-6 rounded-tr-xl rounded-br-xl transition-all ${
         showMenu ? "left-0" : "-left-full"
       }`}
     >
@@ -37,24 +39,40 @@ function SideBar(props) {
           <li
             className={`${
               activeItem === "home"
-                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                ? "bg-gray-600 p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
             <Link
               to={`/`}
               className={`${
-                activeItem === "home"
-                  ? "bg-[#ec7c6a]"
-                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                changeMode
+                  ? `${
+                      activeItem === "home"
+                        ? "bg-[#ec7c6a]"
+                        : "group-hover:bg-[#ec7c6a]"
+                    }`
+                  : `${
+                      activeItem === "home"
+                        ? "bg-blue-500"
+                        : "group-hover:bg-blue-500"
+                    }`
               } p-4 flex justify-center rounded-xl`}
               onClick={() => handleItemClick("home")}
             >
               <RiHome6Line
                 className={`text-2xl ${
-                  activeItem === "home"
-                    ? "text-white"
-                    : "text-[#ec7c6a] group-hover:text-white"
+                  changeMode
+                    ? `${
+                        activeItem === "home"
+                          ? "text-white"
+                          : "text-[#ec7c6a] group-hover:text-white"
+                      }`
+                    : `${
+                        activeItem === "home"
+                          ? "text-white"
+                          : "text-[#000] group-hover:text-white"
+                      }`
                 }`}
               />
             </Link>
@@ -63,24 +81,40 @@ function SideBar(props) {
           <li
             className={`${logged ? "" : "hidden"} ${
               activeItem === "percent"
-                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                ? "bg-gray-600 p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
             <Link
-              to='/buyList'
+              to="/buyList"
               className={`${
-                activeItem === "percent"
-                  ? "bg-[#ec7c6a]"
-                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                changeMode
+                  ? `${
+                      activeItem === "percent"
+                        ? "bg-[#ec7c6a]"
+                        : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                    }`
+                  : `${
+                      activeItem === "percent"
+                        ? "bg-blue-500"
+                        : "group-hover:bg-blue-500"
+                    }`
               } p-4 flex justify-center rounded-xl`}
               onClick={() => handleItemClick("percent")}
             >
               <RiHandbagLine
                 className={`text-2xl ${
-                  activeItem === "percent"
-                    ? "text-white"
-                    : "text-[#ec7c6a] group-hover:text-white"
+                  changeMode
+                    ? `${
+                        activeItem === "percent"
+                          ? "text-white"
+                          : "text-[#ec7c6a] group-hover:text-white"
+                      }`
+                    : `${
+                        activeItem === "percent"
+                          ? "text-white"
+                          : "text-[#000] group-hover:text-white"
+                      }`
                 }`}
               />
             </Link>
@@ -89,7 +123,7 @@ function SideBar(props) {
           {/* <li
             className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${
               activeItem === "pieChart"
-                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                ? "bg-gray-600 p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
@@ -113,26 +147,42 @@ function SideBar(props) {
           </li> */}
 
           <li
-            className={`${logged && privUser1 !== "Admin"? "" : "hidden"} ${
+            className={`${logged && privUser1 !== "Admin" ? "" : "hidden"} ${
               activeItem === "mail"
-                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                ? "bg-gray-600 p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
             <Link
               to={`/mail`}
               className={`${
-                activeItem === "mail"
-                  ? "bg-[#ec7c6a]"
-                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                changeMode
+                  ? `${
+                      activeItem === "mail"
+                        ? "bg-[#ec7c6a]"
+                        : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                    }`
+                  : `${
+                      activeItem === "mail"
+                        ? "bg-blue-500"
+                        : "group-hover:bg-blue-500"
+                    }`
               } p-4 flex justify-center rounded-xl`}
               onClick={() => handleItemClick("mail")}
             >
               <RiMailLine
                 className={`text-2xl ${
-                  activeItem === "mail"
-                    ? "text-white"
-                    : "text-[#ec7c6a] group-hover:text-white"
+                  changeMode
+                    ? `${
+                        activeItem === "mail"
+                          ? "text-white"
+                          : "text-[#ec7c6a] group-hover:text-white"
+                      }`
+                    : `${
+                        activeItem === "mail"
+                          ? "text-white"
+                          : "text-[#000] group-hover:text-white"
+                      }`
                 }`}
               />
             </Link>
@@ -141,7 +191,7 @@ function SideBar(props) {
           {/* <li
             className={`${logged ? "" : "hidden"} ${
               activeItem === "notification"
-                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                ? "bg-gray-600 p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
@@ -167,24 +217,40 @@ function SideBar(props) {
           <li
             className={`${logged && privUser1 === "Admin" ? "" : "hidden"} ${
               activeItem === "settings"
-                ? "bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl"
+                ? "bg-gray-600 p-4 rounded-tl-xl rounded-bl-xl"
                 : "p-4 rounded-tl-xl rounded-bl-xl group trancition-colors"
             }`}
           >
             <Link
               to={`/Settings`}
               className={`${
-                activeItem === "settings"
-                  ? "bg-[#ec7c6a]"
-                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                changeMode
+                  ? `${
+                      activeItem === "settings"
+                        ? "bg-[#ec7c6a]"
+                        : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                    }`
+                  : `${
+                      activeItem === "settings"
+                        ? "bg-blue-500"
+                        : "group-hover:bg-blue-500"
+                    }`
               } p-4 flex justify-center rounded-xl`}
               onClick={() => handleItemClick("settings")}
             >
               <RiSettings4Line
                 className={`text-2xl ${
-                  activeItem === "settings"
-                    ? "text-white"
-                    : "text-[#ec7c6a] group-hover:text-white"
+                  changeMode
+                    ? `${
+                        activeItem === "settings"
+                          ? "text-white"
+                          : "text-[#ec7c6a] group-hover:text-white"
+                      }`
+                    : `${
+                        activeItem === "settings"
+                          ? "text-white"
+                          : "text-[#000] group-hover:text-white"
+                      }`
                 }`}
               />
             </Link>
@@ -204,16 +270,32 @@ function SideBar(props) {
                 handleItemClick("logout");
               }}
               className={`${
-                activeItem === "logout"
-                  ? "bg-[#ec7c6a]"
-                  : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                changeMode
+                  ? `${
+                      activeItem === "logout"
+                        ? "bg-gray-600"
+                        : "hover:bg-[#262837] group-hover:bg-[#ec7c6a]"
+                    }`
+                  : `${
+                      activeItem === "logout"
+                        ? "bg-blue-500"
+                        : "group-hover:bg-blue-500"
+                    }`
               } p-4 flex justify-center rounded-xl`}
             >
               <RiLogoutBoxLine
                 className={`text-2xl ${
-                  activeItem === "logout"
-                    ? "text-white"
-                    : "text-[#ec7c6a] group-hover:text-white"
+                  changeMode
+                    ? ` ${
+                        activeItem === "logout"
+                          ? "text-white"
+                          : "text-[#ec7c6a] group-hover:text-white"
+                      }`
+                    : ` ${
+                        activeItem === "logout"
+                          ? "text-white"
+                          : "text-[#000] group-hover:text-white"
+                      }`
                 }`}
               />
             </a>

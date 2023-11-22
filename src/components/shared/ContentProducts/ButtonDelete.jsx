@@ -1,6 +1,7 @@
 import { RiDeleteBinLine } from "react-icons/ri";
 
-function ButtonDelete({handleDelete, id}) {
+function ButtonDelete({ handleDelete, id }) {
+
   return (
     <div>
       <button

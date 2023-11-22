@@ -29,7 +29,7 @@ const AlertModal = () => {
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gray-200">
           <button
-            className={`w-full ${colorAlert} hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}
+            className={`w-full ${colorAlert} ${colorAlert == 'bg-red-500'?"hover:bg-red-400": "hover:bg-green-400"} text-white font-bold py-2 px-4 rounded`}
             onClick={closeModal}
           >
             Cerrar

@@ -6,7 +6,7 @@ import { ProductContext } from "../../Context/ProductContext";
 function ProductCarrito({ item }) {
   const { removeFromCart, increaseAmount, decreaseAmount } =
     useContext(CartContext);
-  const { dataDiscount } = useContext(ProductContext);
+  const { dataDiscount, changeMode } = useContext(ProductContext);
   const numberValue = parseInt(dataDiscount.CatnDescuento, 10);
   const numeroConvertido = numberValue / 100;
 
@@ -14,8 +14,8 @@ function ProductCarrito({ item }) {
 
   return (
     <div>
-      <div className="">
-        <div className="bg-[#262837] p-4 rounded-xl mb-4">
+      <div className="md:w-[330px] w-[310px]">
+        <div className={`${changeMode ?`bg-[#262837] border border-black `:`bg-gray-300 border`} p-4 rounded-xl mb-4`}>
           <div className="grid grid-cols-6">
             <div className="col-span-3 pb-3 flex items-center gap-x-4">
               <img
@@ -24,10 +24,12 @@ function ProductCarrito({ item }) {
                 className="w-10 h-10 object-cover rounded-full"
               />
               <div>
-                <h5 className="text-sm">{item.description}</h5>
+                <h5 className={`text-sm ${changeMode ?``:`text-black`}`}>{item.productName}</h5>
                 <h6
                   className={`text-md text-gray-500 flex ${
-                    dataDiscount.estadoDescuento == "Activated" ? "text-red-300" : ""
+                    dataDiscount.estadoDescuento == "Activated"
+                      ? "text-red-300"
+                      : ""
                   }`}
                 >
                   ${item.price}{" "}
@@ -45,7 +47,7 @@ function ProductCarrito({ item }) {
             </div>
             {/* Qty */}
 
-            <div className="grup flex items-center bg-[#1F1D2B] h-[50px] w-[80px] mx-5 rounded-lg">
+            <div className={`grup flex items-center ${changeMode ?`bg-[#1F1D2B]`:`bg-gray-400 text-black`} h-[50px] w-[80px] mx-5 rounded-lg`}>
               <div
                 onClick={() => decreaseAmount(item.id)}
                 className="h-full flex-1 flex justify-center items-center cursor-pointer"
@@ -53,7 +55,7 @@ function ProductCarrito({ item }) {
                 <RiSubtractLine />
               </div>
               <div>
-                <span className="bg-[#1F1D2B] p-3 border w-[5px] rounded-lg">
+                <span className={`${changeMode ?`bg-[#1F1D2B]`:`bg-gray-400 text-black`}  p-3 border w-[5px] rounded-lg`}>
                   {item.amount}
                 </span>
               </div>
@@ -66,11 +68,11 @@ function ProductCarrito({ item }) {
             </div>
 
             <div className="ml-14 mt-4 w-[70px] text-green-400 h-[20px]">
-              <span>{`$ ${
+              <span>{`$ ${dataDiscount.estadoDescuento == "Activated" ? 
                 parseFloat(item.price * item.amount).toFixed(2) -
                 parseFloat(item.price * item.amount).toFixed(2) *
                   numeroConvertido
-              }`}</span>
+               : parseFloat(item.price * item.amount).toFixed(2) }`}</span>
             </div>
           </div>
           <div className="grid grid-cols-7 items-center gap-2">

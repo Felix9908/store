@@ -3,7 +3,7 @@ import axios from "axios";
 export const ProductContext = createContext();
 
 const ProductProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [data, setData] = useState([]);
   const [logged, setLogged] = useState(false);
@@ -16,6 +16,7 @@ const ProductProvider = ({ children }) => {
   const [emailUser, setEmailUser] = useState("");
   const [verifiAcount, setVerifiAcount] = useState(false);
   const [dataDiscount, setDataDiscount] = useState("");
+  const [changeMode, setchangeMode] = useState(false);
 
   useEffect(() => {
     if (showAlert == true) {
@@ -34,7 +35,7 @@ const ProductProvider = ({ children }) => {
     if (logged == false && token == null) {
       setShowAlert(true);
       setAlertMessage(
-        "Bienvenido a muestra aplicacion de tienda online, inicie sesión para empezar a comprar"
+        "Bienvenido a nuestra aplicacion de tienda online, inicie sesión para empezar a comprar"
       );
       setColorAlert("bg-green-500");
       setAlertTitulo("Bienvenido");
@@ -45,17 +46,9 @@ const ProductProvider = ({ children }) => {
     (data1) => data1.type === "UtilesDelHogar"
   );
 
-  const Perfumeria = products.filter((data1) => data1.type === "Perfumeria");
-
-  const Zapatos = products.filter((data1) => data1.type === "Zapatos");
-
-  const Ropa = products.filter((data1) => data1.type === "Ropa");
-
-  const Aceo = products.filter((data1) => data1.type === "Aceo"); 
-
   const getBuys = async () => {
     try {
-      await axios.get("http://localhost:9999/getbuys").then((res) => {
+      await axios.get("https://back-endstore-production.up.railway.app/getbuys").then((res) => {
         const privUser = sessionStorage.getItem("privUser");
         setLoading(false);
         const id = sessionStorage.getItem("idClient");
@@ -64,7 +57,7 @@ const ProductProvider = ({ children }) => {
           const resultData = data.filter(
             (compra) =>
               compra.cliente_id === parseInt(id, 10) &&
-              compra.estado === "pendiente"
+              compra.estadoEntCliente === "pendiente"
           );
           setDataBuys(resultData);
         } else {
@@ -72,31 +65,57 @@ const ProductProvider = ({ children }) => {
         }
       });
     } catch (err) {
-      console.log(err);
+      setShowAlert(true);
+      setAlertMessage("Error al conectar con la base de datos");
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
     }
   };
 
+  useEffect(() => {
+    if (logged) {
+      getBuys();
+    }
+  }, [logged]);
+
+  const Perfumeria = products.filter((data1) => data1.type === "Perfumeria");
+
+  const Zapatos = products.filter((data1) => data1.type === "Zapatos");
+
+  const Ropa = products.filter((data1) => data1.type === "Ropa");
+
+  const Aceo = products.filter((data1) => data1.type === "Aceo");
+
   const getTienda = async () => {
     try {
-      const res = await axios.get("http://localhost:9999/getTienda");
+      const res = await axios.get("https://back-endstore-production.up.railway.app/getTienda");
       setDataDiscount(res.data[0]);
     } catch (err) {
       setShowAlert(true);
-      setAlertMessage(err.response.msg);
+      setAlertMessage("Error al conectar con la base de datos");
       setColorAlert("bg-red-500");
-      setAlertMessage("Error");
+      setAlertTitulo("Error");
     }
   };
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        await axios.get("http://localhost:9999/data").then((res) => {
+        await axios.get("https://back-endstore-production.up.railway.app/data").then((res) => {
           setProducts(res.data);
           setLoading(false);
         });
       } catch (err) {
-        console.log(err);
+        setShowAlert(true);
+        setAlertMessage("Error al conectar con la base de datos");
+        setColorAlert("bg-red-500");
+        setAlertTitulo("Error");
+      }
+      const mode = sessionStorage.getItem("mode");
+      if (mode == 1) {
+        setchangeMode(true);
+      } else {
+        false;
       }
     };
 
@@ -106,7 +125,6 @@ const ProductProvider = ({ children }) => {
     }
 
     loadData();
-    getBuys();
     getTienda();
   }, []);
 
@@ -120,10 +138,10 @@ const ProductProvider = ({ children }) => {
     }
   }, [products]);
 
-  const login = async ({ email, password }) => {
+  const login = async ({ userName, password }) => {
     try {
       await axios
-        .post("http://localhost:9999/login", { email, password })
+        .post("https://back-endstore-production.up.railway.app/login", { userName, password })
         .then((res) => {
           if (res.data.msg == "AUTEMTICACION EXITOSA") {
             setLogged(true);
@@ -131,11 +149,15 @@ const ProductProvider = ({ children }) => {
             sessionStorage.setItem("privUser", res.data.userData[0].privUser);
             sessionStorage.setItem("dataUser", res.data.userData[0].fullName);
             sessionStorage.setItem("idClient", res.data.userData[0].id);
+            sessionStorage.setItem("mode", res.data.userData[0].mode);
+            if (res.data.userData[0].mode == 1) {
+              setchangeMode(true);
+            }
           } else {
             setShowAlert(true);
             setAlertMessage(res.data.msg);
             setColorAlert("bg-red-500");
-            setAlertMessage("Error");
+            setAlertTitulo("Error");
           }
         });
     } catch (err) {
@@ -144,17 +166,23 @@ const ProductProvider = ({ children }) => {
   };
 
   const deleteProduct = async (prodictId) => {
-    try {
-      await axios.delete("http://localhost:9999/deleteProducts/" + prodictId);
-    } catch (err) {
-      console.log(err);
+    const isConfirmed = window.confirm("¿Estás seguro de que deseas borrar?");
+    if (isConfirmed) {
+      try {
+        await axios.delete("https://back-endstore-production.up.railway.app/deleteProducts/" + prodictId);
+      } catch (err) { 
+        setShowAlert(true);
+        setAlertMessage(err.response.data);
+        setColorAlert("bg-red-500");
+        setAlertTitulo("Error");
+      }
     }
   };
 
   const addProduct = async ({ formData }) => {
     try {
       await axios
-        .post("http://localhost:9999/create", formData, {
+        .post("https://back-endstore-production.up.railway.app/create", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -173,7 +201,7 @@ const ProductProvider = ({ children }) => {
 
   const createUser = async ({ user }) => {
     try {
-      await axios.post("http://localhost:9999/createUser", user).then((res) => {
+      await axios.post("https://back-endstore-production.up.railway.app/createUser", user).then((res) => {
         if (res.data === "Product uploaded successfully") {
           setShowAlert(true);
           setAlertMessage(res.data);
@@ -197,11 +225,18 @@ const ProductProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.put("http://localhost:9999/logout").then((res) => {
+      await axios.put("https://back-endstore-production.up.railway.app/logout").then((res) => {
         if (res.data.msg == "Has sido desconectado") {
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("privUser");
           sessionStorage.removeItem("dataUser");
+          sessionStorage.removeItem("idClient");
+          sessionStorage.removeItem("mode");
+          setDataDiscount("");
+          setEmailUser("");
+          setColorAlert("");
+          setAlertTitulo("");
+          setAlertMessage("");
           setLogged(false);
         }
       });
@@ -212,7 +247,7 @@ const ProductProvider = ({ children }) => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:9999/users");
+      const response = await axios.get("https://back-endstore-production.up.railway.app/users");
       setUsers(response.data);
       setLoading(false);
     } catch (error) {
@@ -220,45 +255,54 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const buys = async ({ buyData }) => {
+ 
+
+  const estadoVendedorBuy = async (id) => {
     try {
-      await axios.post("http://localhost:9999/buys", buyData).then((res) => {
-        setShowAlert(true);
-        setAlertMessage(res.data);
-        setColorAlert("bg-green-500");
-        setAlertTitulo("Mensaje");
-      });
+      await axios
+        .put("https://back-endstore-production.up.railway.app/putBuysVendedor", { id })
+        .then((res) => {
+          console.log(res);
+        });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const estadoBuy = async (id) => {
+  const estadoClienteBuy = async (id) => {
     try {
-      await axios.put("http://localhost:9999/putBuys", { id }).then((res) => {
-        console.log(res);
-      });
+      await axios
+        .put("https://back-endstore-production.up.railway.app/putBuysCliente", { id })
+        .then((res) => {
+          console.log(res);
+        });
     } catch (err) {
       console.log(err);
     }
   };
 
   const deleteBuy = async (id) => {
-    try {
-      await axios
-        .delete("http://localhost:9999/deleteBuy/" + id)
-        .then((res) => {
-          console.log(res);
-        });
-      getBuys();
-    } catch (err) {
-      console.log(err);
+    const isConfirmed = window.confirm("¿Estás seguro de que deseas borrar?");
+    if (isConfirmed) {
+      try {
+        await axios
+          .delete("https://back-endstore-production.up.railway.app/deleteBuy/" + id)
+          .then((res) => {
+            setShowAlert(true);
+            setAlertMessage(res.data);
+            setColorAlert("bg-green-500");
+            setAlertTitulo("Mensaje");
+          });
+        getBuys();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   const changeDiscount = async ({ select, discount, id }) => {
     try {
-      const res = await axios.post("http://localhost:9999/changeDiscount", {
+      const res = await axios.post("https://back-endstore-production.up.railway.app/changeDiscount", {
         select,
         discount,
         id,
@@ -268,18 +312,67 @@ const ProductProvider = ({ children }) => {
       setColorAlert("bg-green-500");
       setAlertTitulo("Mensaje");
     } catch (err) {
-      console.log(err)
-      // setShowAlert(true);
-      // setAlertMessage(err.response.data);
-      // setColorAlert("bg-green-500");
-      // setAlertTitulo("Error");
+      console.log(err);
+      setShowAlert(true);
+      setAlertMessage(err.response.data);
+      setColorAlert("bg-green-500");
+      setAlertTitulo("Error");
     }
   };
 
+  const uptateAvailable = async ({ newAvailable, id }) => {
+    try {
+      const res = await axios.post("https://back-endstore-production.up.railway.app/updateAvailable", {
+        newAvailable,
+        id,
+      });
+      setShowAlert(true);
+      setAlertMessage(res.data);
+      setColorAlert("bg-green-500");
+      setAlertTitulo("Mensaje");
+    } catch (err) {
+      setShowAlert(true);
+      setAlertMessage(err.response.data);
+      setColorAlert("bg-green-500");
+      setAlertTitulo("Error");
+    }
+  };
+
+  const changeModeApp = () => {
+    setTimeout(async () => {
+      try {
+        const id = sessionStorage.getItem("idClient");
+        let newModeValue;
+        if (changeMode == false) {
+          sessionStorage.removeItem("mode");
+          newModeValue = 1;
+          sessionStorage.setItem("mode", 1);
+        } else {
+          sessionStorage.removeItem("mode");
+          newModeValue = 0;
+          sessionStorage.setItem("mode", 0);
+        }
+        const res = await axios.put("https://back-endstore-production.up.railway.app/changeMode", {
+          newModeValue,
+          id,
+        });
+      } catch (err) {
+        setShowAlert(true);
+        setAlertMessage(err.response.msg);
+        setColorAlert("bg-red-500");
+        setAlertMessage("Error");
+      }
+    }, 5000);
+  };
 
   return (
     <ProductContext.Provider
       value={{
+        changeModeApp,
+        changeMode,
+        setchangeMode,
+        uptateAvailable,
+        estadoClienteBuy,
         changeDiscount,
         dataDiscount,
         setAlertTitulo,
@@ -291,9 +384,8 @@ const ProductProvider = ({ children }) => {
         setEmailUser,
         deleteBuy,
         getBuys,
-        estadoBuy,
+        estadoVendedorBuy,
         dataBuys,
-        buys,
         loading,
         UtilesDelHogar,
         Perfumeria,

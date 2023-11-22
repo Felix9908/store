@@ -1,15 +1,32 @@
 import { useState, useContext } from "react";
 import { CartContext } from "../Context/CartContext";
 import { ProductContext } from "../Context/ProductContext";
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 const BuysPage = () => {
   const [telefono, setTelefono] = useState("");
   const [direccion, setDireccion] = useState("");
-  const [respuesta, setRespuesta] = useState(null);
   const { cart } = useContext(CartContext);
-  const { buys, dataDiscount } = useContext(ProductContext);
+  const { dataDiscount, getBuys, setShowAlert, setAlertMessage, setAlertTitulo, setColorAlert} = useContext(ProductContext);
   const numberValue = parseInt(dataDiscount.CatnDescuento, 10);
   const numeroConvertido = numberValue / 100;
+  const navigate = useNavigate()
+
+  const buys = async ({ buyData }) => {
+    try {
+      await axios.post("http://localhost:9999/buys", buyData).then((res) => {
+        setShowAlert(true);
+        setAlertMessage(res.data + " Gracias por comprar en nuestra tienda");
+        setColorAlert("bg-green-500");
+        setAlertTitulo("Mensaje");
+        getBuys()
+        navigate('/buyList')
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 
   const handleSubmit = async (e) => {
@@ -49,8 +66,8 @@ const BuysPage = () => {
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
       <h6 className="text-2xl font-semibold mb-4">Formulario de compra</h6>
       <p>
-        El encargo se hara a domicilio, necesitamos saber cual es su numero y
-        direccion para hacer el envio
+        El encargo se hara a domicilio de foma gratuita, necesitamos saber cual es su número y
+        dirección para realizar el envio
       </p>
       <form className="mt-3" onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -86,7 +103,6 @@ const BuysPage = () => {
           Enviar
         </button>
       </form>
-      {respuesta && <div className="mt-4 text-green-600">{respuesta}</div>}
     </div>
   );
 };

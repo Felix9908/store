@@ -8,8 +8,14 @@ const CreateUser = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [privUser, setPrivUser] = useState("Cliente");
-  const { createUser, setAlertMessage, setShowAlert, setColorAlert, setAlertTitulo} =
-    useContext(ProductContext);
+  const {
+    createUser,
+    setAlertMessage,
+    setShowAlert,
+    setColorAlert,
+    setAlertTitulo,
+    changeMode,
+  } = useContext(ProductContext);
 
   const privUser1 = sessionStorage.getItem("privUser");
 
@@ -24,7 +30,7 @@ const CreateUser = () => {
     };
     if (password !== repeatPassword) {
       setShowAlert(true);
-      setAlertMessage("incorrect password");
+      setAlertMessage("Las contraseñas no coinciden");
       setColorAlert("bg-red-500");
       setAlertTitulo("Error");
     } else {
@@ -46,11 +52,17 @@ const CreateUser = () => {
     <div className="flex items-center flex-col justify-center h-screen ">
       <form
         onSubmit={handleSubmit}
-        className=" rounded-xl bg-[#161827] p-10 "
+        className={`rounded-xl ${
+          changeMode ? `bg-[#161827]` : `bg-gray-200`
+        } mb-10 p-10 `}
       >
         <div className="flex items-center justify-center">
-          <h6 className="text-white text-4xl font-bold m-2">
-            Crear cuenta
+          <h6
+            className={`${
+              changeMode ? `text-[#ec7c6a]` : `text-blue-500`
+            } text-4xl font-bold mb-5`}
+          >
+            Crea tu cuenta
           </h6>
         </div>
         <div className="mb-4">
@@ -61,7 +73,7 @@ const CreateUser = () => {
             Nombre de usuario
           </label>
           <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``} px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="text"
             id="username"
             value={username}
@@ -77,7 +89,7 @@ const CreateUser = () => {
             Nombre completo
           </label>
           <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``} px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="text"
             id="fullName"
             value={fullName}
@@ -93,7 +105,7 @@ const CreateUser = () => {
             Correo electrónico
           </label>
           <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``}  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="email"
             id="email"
             value={email}
@@ -109,7 +121,7 @@ const CreateUser = () => {
             Password
           </label>
           <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``}  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="password"
             id="password"
             value={password}
@@ -125,7 +137,7 @@ const CreateUser = () => {
             Repeat password
           </label>
           <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``}  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="password"
             id="RepeatPassword"
             value={repeatPassword}
@@ -151,7 +163,11 @@ const CreateUser = () => {
           />
         </div>
         <button
-          className="w-full py-2 px-4 text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className={`w-full py-2 px-4 ${
+            changeMode
+              ? `bg-[#ec7c6a]  hover:bg-[#fe9e8c]`
+              : `bg-blue-700 hover:bg-blue-500`
+          } text-xl text-white rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
           type="submit"
         >
           Crear cuenta

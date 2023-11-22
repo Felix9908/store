@@ -9,6 +9,7 @@ const CreateProduct = () => {
     setShowAlert,
     setColorAlert,
     setAlertTitulo,
+    changeMode
   } = useContext(ProductContext);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
@@ -100,10 +101,10 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-[450px] flex-col">
-      <h3 className="text-white text-5xl mb-10">Add product to page</h3>
+    <div className="flex items-center  justify-center h-[450px] flex-col">
+      <h3 className={`${changeMode ? `text-white`:`text-black`} text-5xl mb-10`}>Add product to page</h3>
       <form
-        className="flex flex-col w-[300px]"
+        className={`flex ${changeMode ? `text-white bg-[#161827]`:`text-black bg-gray-200`} flex-col w-[300px]  p-5 rounded-xl`}
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
@@ -111,7 +112,7 @@ const CreateProduct = () => {
           type="text"
           name="productName"
           placeholder="Product name"
-          className="m-[5px]"
+          className={`m-[5px] ${changeMode ?`bg-[#1F1D2B]`:``}`}
           value={productName}
           onChange={handleInputChange}
         />
@@ -119,7 +120,7 @@ const CreateProduct = () => {
           type="text"
           name="description"
           placeholder="Description"
-          className="m-[5px]"
+          className={`m-[5px] ${changeMode ?`bg-[#1F1D2B]`:``}`}
           value={description}
           onChange={handleInputChange}
         />
@@ -127,7 +128,7 @@ const CreateProduct = () => {
           name="type"
           value={type}
           onChange={handleInputChange}
-          className="m-[5px]"
+          className={`m-[5px] ${changeMode ?`bg-[#1F1D2B]`:``}`}
         >
           <option value="">Select Type</option>
           <option value="UtilesDelHogar">Utiles del hogar</option>
@@ -140,7 +141,7 @@ const CreateProduct = () => {
           type="number"
           name="price"
           placeholder="Price"
-          className="m-[5px]"
+          className={`m-[5px] ${changeMode ?`bg-[#1F1D2B]`:``}`}
           value={price}
           onChange={handleInputChange}
         />
@@ -148,14 +149,14 @@ const CreateProduct = () => {
           type="number"
           name="available"
           placeholder="Available"
-          className="m-[5px]"
+          className={`m-[5px] ${changeMode ?`bg-[#1F1D2B]`:``}`}
           value={available}
           onChange={handleInputChange}
         />
         <input
           type="file"
           name="image"
-          className="m-[5px]"
+          className={`m-[5px] ${changeMode ?`bg-[#1F1D2B]`:``}`}
           onChange={handleInputChange}
         />
         <button

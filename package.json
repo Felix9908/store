@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "serve dist -s -n -L -p $PORT"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -16,7 +17,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-paginate": "^8.2.0",
-    "react-router-dom": "^6.11.0"
+    "react-router-dom": "^6.11.0",
+    "serve": "^14.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

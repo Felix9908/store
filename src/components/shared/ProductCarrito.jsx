@@ -28,7 +28,7 @@ function ProductCarrito({ item }) {
                 <h6
                   className={`text-md text-gray-500 flex ${
                     dataDiscount.estadoDescuento == "Activated"
-                      ? "text-red-300"
+                      ? "text-red-500"
                       : ""
                   }`}
                 >
@@ -38,7 +38,7 @@ function ProductCarrito({ item }) {
                       dataDiscount.estadoDescuento == "Activated"
                         ? ""
                         : "hidden"
-                    } text-blue-200`}
+                    } text-blue-500`}
                   >
                     -{numberValue}%
                   </p>

@@ -8,12 +8,14 @@ import { RiAddLine, RiSubtractLine } from "react-icons/ri";
 
 function ProductDetalis() {
   const { addToCart } = useContext(CartContext);
-  const { products, logged, uptateAvailable, changeMode } =
+  const { products, logged, uptateAvailable, changeMode, dataDiscount } =
     useContext(ProductContext);
   const { id } = useParams();
   const product = products.find((item) => item.id === parseInt(id));
   const privUser1 = sessionStorage.getItem("privUser");
   const [newAvailable, setNewAvailable] = useState(product.available);
+  const numberValue = parseInt(dataDiscount.CatnDescuento, 10);
+  const numeroConvertido = numberValue / 100;
 
   if (!product) {
     return <div>No se encontró el producto.</div>;
@@ -23,25 +25,21 @@ function ProductDetalis() {
   const { productName, price, description } = product;
 
   return (
-    <div className={`${changeMode ?`bg-[#262837]`:``}`}>
+    <div className={`${changeMode ? `bg-[#262837]` : ``} w-full `}>
       <div className="flex items-center justify-center">
-        <h5
-          className={`text-3xl ${
-            changeMode ? `text-white` : `text-black`
-          } pt-[50px]`}
-        >
+        <h5 className={`text-3xl ${changeMode ? `text-white` : `text-black`}`}>
           Detalles del producto
         </h5>
         <div className="hidden lg:inline">
           <Car />
         </div>
       </div>
-      <section className="md:pb-12 lg:py-32 h-screen flex items-center flex-col">
+      <section className="md:pb-12 lg:py-32 flex items-center flex-col">
         <div className="border-b border-gray-300 p-10 container mx-auto ">
           <div className="flex flex-col lg:flex-row items-center">
-            <div className="flex flex-1 justify-center items-center mb-8 lg:mb-0">
+            <div className="flex flex-1  h-[250px] justify-center items-center mb-8 lg:mb-0">
               <img
-                className="max-w-[500px] lg:max-w-xs"
+                className="w-[300px] h-[240px] border border-[1px] border-[black] lg:max-w-xs"
                 src={`https://back-endstore-production.up.railway.app/${imagePath}`}
                 alt={productName}
               />
@@ -54,24 +52,40 @@ function ProductDetalis() {
               >
                 Nombre: {productName}
               </h1>
-              <div className="text-2xl text-green-500 font-medium mb-6">
+              <div
+                className={`flex text-2xl text-green-500 ${
+                  dataDiscount.estadoDescuento == "Activated"
+                    ? "text-red-400"
+                    : "ml-7"
+                } font-medium mb-6`}
+              >
                 $ {price}
+                <div
+                  className={`ml-1 flex  ${
+                    dataDiscount.estadoDescuento == "Activated" ? "" : "hidden"
+                  } text-blue-400`}
+                >
+                  -{numberValue}%={" "}
+                  <p className="text-green-400 ml-1">
+                    ${price - price * numeroConvertido}
+                  </p>
+                </div>
               </div>
               <p className={`mb-8 ${changeMode ? `text-white` : `text-black`}`}>
                 Descripción: {description}
               </p>
               <button
                 onClick={() => addToCart(product, product.id)}
-                className={` ${
-                  logged ? "" : "hidden"
-                } bg- py-2 px-4 rounded-lg bg-[#ec7c6a] text-white`}
+                className={` ${logged ? "" : "hidden"} py-2 px-4 rounded-lg ${
+                  changeMode ? "bg-[#ec7c6a] text-white" : "bg-blue-500"
+                }`}
               >
                 Añadir al carrito
               </button>
             </div>
             {/* emelent to add products aviable to database */}
             <div
-              className={`flex flex-col items-center justify-center  ${
+              className={`pt-5 flex flex-col items-center justify-center  ${
                 logged && privUser1 == "Admin" ? "" : "hidden"
               }`}
             >
@@ -91,7 +105,7 @@ function ProductDetalis() {
                 <div>
                   <span
                     className={`${
-                      changeMode ? `bg-[#1F1D2B]` : `bg-gray-400 text-black`
+                      changeMode ? `bg-[#1F1D2B]` : `bg-gray-400 text-white `
                     } p-3 border w-[5px] rounded-lg`}
                   >
                     {newAvailable}
@@ -111,7 +125,9 @@ function ProductDetalis() {
                   onClick={() =>
                     uptateAvailable({ newAvailable, id: product.id })
                   }
-                  className={`bg-[#1F1D2B] p-1 mt-1 rounded-lg ${
+                  className={`${
+                    changeMode ? "bg-[#1F1D2B] text-white" : "bg-gray-300"
+                  } p-1 mt-1 rounded-lg ${
                     newAvailable == product.available ? "hidden" : ""
                   }`}
                 >
@@ -121,7 +137,9 @@ function ProductDetalis() {
             </div>
           </div>
         </div>
-        <CommentBox productId={id} />
+        <div className="lg:w-full w-[360px] g:ml-20 pb-[100px] lg:pb-[50px] pt-[20px]">
+          <CommentBox productId={id} />
+        </div>
       </section>
     </div>
   );

@@ -34,7 +34,11 @@ function BuyList() {
           <div className="text-white overflow-scroll">
             {dataBuys.length == 0 ? (
               <>
-                <h6 className="flex justify-center text-white text-1xl pt-2">
+                <h6
+                  className={`flex justify-center ${
+                    changeMode ? "text-white" : "text-black"
+                  } text-1xl pt-2`}
+                >
                   No hay entregas ahun
                 </h6>
               </>
@@ -44,7 +48,9 @@ function BuyList() {
                   <thead>
                     <tr>
                       <th
-                        className={`py-1 px-2 border ${
+                        className={`${
+                          privUser == "Admin" ? "" : "hidden"
+                        } py-1 px-2 border ${
                           changeMode ? `` : `text-[#000] border-[#000]`
                         }`}
                       >
@@ -79,14 +85,18 @@ function BuyList() {
                         Precio Total
                       </th>
                       <th
-                        className={`py-1 px-2 border ${
+                        className={`${
+                          privUser == "Admin" ? "" : "hidden"
+                        } py-1 px-2 border ${
                           changeMode ? `` : `text-[#000] border-[#000]`
                         }`}
                       >
                         Telefono
                       </th>
                       <th
-                        className={`py-1 px-2 border ${
+                        className={`${
+                          privUser == "Admin" ? "" : "hidden"
+                        } py-1 px-2 border ${
                           changeMode ? `` : `text-[#000] border-[#000]`
                         }`}
                       >
@@ -112,7 +122,9 @@ function BuyList() {
                     {dataBuys.map((buy) => (
                       <tr key={buy.id}>
                         <td
-                          className={`py-1 px-2 border ${
+                          className={`${
+                            privUser == "Admin" ? "" : "hidden"
+                          } py-1 px-2 border ${
                             changeMode ? `` : `text-[#000] border-[#000]`
                           }`}
                         >
@@ -147,14 +159,18 @@ function BuyList() {
                           {buy.precio_total}
                         </td>
                         <td
-                          className={`py-1 px-2 border ${
+                          className={` ${
+                            privUser == "Admin" ? "" : "hidden"
+                          } py-1 px-2 border ${
                             changeMode ? `` : `text-[#000] border-[#000]`
                           }`}
                         >
                           {buy.numero_telefono}
                         </td>
                         <td
-                          className={`py-1 px-2 border ${
+                          className={`${
+                            privUser == "Admin" ? "" : "hidden"
+                          } py-1 px-2 border ${
                             changeMode ? `` : `text-[#000] border-[#000]`
                           }`}
                         >

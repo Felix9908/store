@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { ProductContext } from "../../Context/ProductContext";
 import { Link } from "react-router-dom";
 
-function Card({ data }) {
+function Card({ data, type }) {
   const { addToCart } = useContext(CartContext);
   const { logged, deleteProduct, dataDiscount, changeMode } =
     useContext(ProductContext);
@@ -16,11 +16,13 @@ function Card({ data }) {
     <div>
       <div
         className={`z-0 relative ${
-          changeMode ? `bg-[#1F1D2B]` : `bg-gray-500`
+          changeMode ? `bg-[#1F1D2B]` : `bg-gray-400`
         }  w-[170px] h-[230px] md:w-[280px] md:h-[280px] rounded-xl overflow-hidden flex flex-col items-center text-gray-300 text-center group`}
       >
         <div
-          className={`absolute  top-6 ml-[125px] md:ml-[220px]  lg:-right-11 md:group-hover:right-5 p-2 flex flex-col justify-center items-center gap-y-2 lg:opacity-0 group-hover:opacity-100 transition-all duration-300`}
+          className={`${
+            type == "BuyPage" ? "hidden" : ""
+          } absolute  top-6 ml-[125px] md:ml-[220px]  lg:-right-11 md:group-hover:right-5 p-2 flex flex-col justify-center items-center gap-y-2 lg:opacity-0 group-hover:opacity-100 transition-all duration-300`}
         >
           <button
             className={`${logged ? "" : "hidden"}`}
@@ -65,7 +67,7 @@ function Card({ data }) {
             <div
               className={`ml-1 flex  ${
                 dataDiscount.estadoDescuento == "Activated" ? "" : "hidden"
-              } text-blue-400`}
+              } text-blue-500`}
             >
               -{numberValue}%={" "}
               <p className="text-green-400 ml-1">

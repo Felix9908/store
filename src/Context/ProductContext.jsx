@@ -170,7 +170,7 @@ const ProductProvider = ({ children }) => {
     if (isConfirmed) {
       try {
         await axios.delete("https://back-endstore-production.up.railway.app/deleteProducts/" + prodictId);
-      } catch (err) { 
+      } catch (err) {
         setShowAlert(true);
         setAlertMessage(err.response.data);
         setColorAlert("bg-red-500");
@@ -199,30 +199,6 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const createUser = async ({ user }) => {
-    try {
-      await axios.post("https://back-endstore-production.up.railway.app/createUser", user).then((res) => {
-        if (res.data === "Product uploaded successfully") {
-          setShowAlert(true);
-          setAlertMessage(res.data);
-          setColorAlert("bg-green-500");
-          setAlertTitulo("Exito");
-        } else if (res.data === "Error inserting data into SQL table") {
-          setShowAlert(true);
-          setAlertMessage(res.data);
-          setColorAlert("bg-red-500");
-          setAlertTitulo("Error");
-        }
-      });
-    } catch (err) {
-      console.log(err.response.data);
-      setShowAlert(true);
-      setAlertMessage(err.response.data);
-      setColorAlert("bg-red-500");
-      setAlertTitulo("Error");
-    }
-  };
-
   const logout = async () => {
     try {
       await axios.put("https://back-endstore-production.up.railway.app/logout").then((res) => {
@@ -232,7 +208,6 @@ const ProductProvider = ({ children }) => {
           sessionStorage.removeItem("dataUser");
           sessionStorage.removeItem("idClient");
           sessionStorage.removeItem("mode");
-          setDataDiscount("");
           setEmailUser("");
           setColorAlert("");
           setAlertTitulo("");
@@ -255,14 +230,15 @@ const ProductProvider = ({ children }) => {
     }
   };
 
- 
-
   const estadoVendedorBuy = async (id) => {
     try {
       await axios
         .put("https://back-endstore-production.up.railway.app/putBuysVendedor", { id })
         .then((res) => {
-          console.log(res);
+          setShowAlert(true);
+          setAlertMessage("Entrega confirmada");
+          setColorAlert("bg-green-500");
+          setAlertTitulo("Mensaje");
         });
     } catch (err) {
       console.log(err);
@@ -274,7 +250,10 @@ const ProductProvider = ({ children }) => {
       await axios
         .put("https://back-endstore-production.up.railway.app/putBuysCliente", { id })
         .then((res) => {
-          console.log(res);
+          setShowAlert(true);
+          setAlertMessage("Entrega confirmada. Gracias por comprar en TiendaEnCasa");
+          setColorAlert("bg-green-500");
+          setAlertTitulo("Mensaje");
         });
     } catch (err) {
       console.log(err);
@@ -405,7 +384,6 @@ const ProductProvider = ({ children }) => {
         setColorAlert,
         colorAlert,
         deleteProduct,
-        createUser,
         products,
         fetchUsers,
         users,

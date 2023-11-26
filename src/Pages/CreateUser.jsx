@@ -1,5 +1,7 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { ProductContext } from "../Context/ProductContext";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const CreateUser = () => {
   const [username, setUsername] = useState("");
@@ -9,14 +11,39 @@ const CreateUser = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [privUser, setPrivUser] = useState("Cliente");
   const {
-    createUser,
     setAlertMessage,
     setShowAlert,
     setColorAlert,
     setAlertTitulo,
     changeMode,
   } = useContext(ProductContext);
+  const navigate = useNavigate()
 
+  const createUser = async ({ user }) => {
+    try {
+      await axios.post("https://back-endstore-production.up.railway.app/createUser", user).then((res) => {
+        if (res.data === "Usuario creado exitosamente") {
+          console.log(res);
+          setShowAlert(true);
+          setAlertMessage(res.data);
+          setColorAlert("bg-green-500");
+          setAlertTitulo("Exito");
+          navigate("/login");
+        } else if (res.data === "Error inserting data into SQL table") {
+          setShowAlert(true);
+          setAlertMessage(res.data);
+          setColorAlert("bg-red-500");
+          setAlertTitulo("Error");
+        }
+      });
+    } catch (err) {
+      setShowAlert(true);
+      setAlertMessage(err.message); // Aquí podrías cambiarlo a err.message para obtener un mensaje más descriptivo.
+      setColorAlert("bg-red-500");
+      setAlertTitulo("Error");
+    }
+  };
+  
   const privUser1 = sessionStorage.getItem("privUser");
 
   const handleSubmit = async (e) => {
@@ -49,7 +76,7 @@ const CreateUser = () => {
   };
 
   return (
-    <div className="flex items-center flex-col justify-center h-screen ">
+    <div className="flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
         className={`rounded-xl ${
@@ -73,7 +100,11 @@ const CreateUser = () => {
             Nombre de usuario
           </label>
           <input
-            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``} px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`w-full ${
+              changeMode
+                ? `bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white`
+                : ``
+            } px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="text"
             id="username"
             value={username}
@@ -89,7 +120,11 @@ const CreateUser = () => {
             Nombre completo
           </label>
           <input
-            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``} px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`w-full ${
+              changeMode
+                ? `bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white`
+                : ``
+            } px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="text"
             id="fullName"
             value={fullName}
@@ -105,7 +140,11 @@ const CreateUser = () => {
             Correo electrónico
           </label>
           <input
-            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``}  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`w-full ${
+              changeMode
+                ? `bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white`
+                : ``
+            }  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="email"
             id="email"
             value={email}
@@ -121,7 +160,11 @@ const CreateUser = () => {
             Password
           </label>
           <input
-            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``}  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`w-full ${
+              changeMode
+                ? `bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white`
+                : ``
+            }  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="password"
             id="password"
             value={password}
@@ -137,7 +180,11 @@ const CreateUser = () => {
             Repeat password
           </label>
           <input
-            className={`w-full ${changeMode ?`bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white` :``}  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`w-full ${
+              changeMode
+                ? `bg-[#1F1D2B] border-[2px] border-[#ec7c6a] text-white`
+                : ``
+            }  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             type="password"
             id="RepeatPassword"
             value={repeatPassword}

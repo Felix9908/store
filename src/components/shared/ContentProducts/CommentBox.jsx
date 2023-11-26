@@ -107,9 +107,9 @@ function CommentBox({ productId }) {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center  rounded-xl p-5 mt-8 mb-[500px] ${
+      className={`flex flex-col items-center justify-center rounded-xl p-5 ${
         changeMode ? `bg-[#161827]` : `bg-gray-300`
-      } w-[300px] lg:w-full`}
+      }`}
     >
       <h3 className={`  text-lg font-semibold mb-2 ${changeMode ?`text-white` : `text-black`}`}>Comentarios:</h3>
       {comments.length === 0 ? (
@@ -117,7 +117,7 @@ function CommentBox({ productId }) {
           <p className={` text-3xl ${changeMode ?`text-white` : `text-black`}`}>No hay comentarios aun</p>
         </>
       ) : (
-        <ul className={`${changeMode ?`bg-[#262837] rounded-xl p-5`:`bg-gray-400 rounded-xl p-5`} w-[900px]`}>
+        <ul className={` ${changeMode ?`bg-[#262837] rounded-xl p-5`:`bg-gray-400 rounded-xl p-5`} w-[350px] md:w-[900px]`}>
           {comments.map((comment) => (
             <li key={comment.id} className="mb-4 border-b">
               <h6 className="text-white">{comment.clientName}</h6>
@@ -190,7 +190,7 @@ function CommentBox({ productId }) {
         ></textarea>
         <button
           type="submit"
-          className="mt-2 bg-[#ec7c6a] hover:bg-[#fc8c7a] text-white py-2 px-4 rounded-md"
+          className={`mt-2 ${changeMode ? "bg-[#ec7c6a] hover:bg-[#fc8c7a]" : "bg-blue-500 hover:bg-blue-400"} text-white py-2 px-4 rounded-md`}
         >
           Submit
         </button>

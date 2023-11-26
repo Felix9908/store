@@ -39,7 +39,7 @@ function ProductList({ data1 }) {
     setTotalPages(Math.ceil(totalItems / itemsPerPage));
     setCurrentPage(0);
 
-    setFilteredList(filteredItems.slice(0, itemsPerPage)); // Establecer la lista filtrada inicial
+    setFilteredList(filteredItems.slice(0, itemsPerPage));
   }, [data1, itemsPerPage, searchValue]);
 
   useEffect(() => {
@@ -60,12 +60,18 @@ function ProductList({ data1 }) {
         </h2>
         <form className="mr-[40px]">
           <div className="w-full relative  ">
-            <RiSearch2Line className={`absolute left-3 top-1/2 -translate-y-1/2 ${changeMode ? 'text-gray-300':'text-black'}`} />
+            <RiSearch2Line
+              className={`absolute left-3 top-1/2 -translate-y-1/2 ${
+                changeMode ? "text-gray-300" : "text-black"
+              }`}
+            />
             <input
               type="text"
               onChange={filter}
               className={`${
-                changeMode ? "bg-[#1F1D2B] text-gray-300" : "bg-gray-300 text-[#000]"
+                changeMode
+                  ? "bg-[#1F1D2B] text-gray-300"
+                  : "bg-gray-300 text-[#000]"
               } w-full py-2 pl-8 pr-4 rounded-lg  outline-none`}
               placeholder="Buscar"
             />
@@ -74,7 +80,9 @@ function ProductList({ data1 }) {
         <select
           value={itemsPerPage}
           onChange={(e) => setItemsPerPage(Number(e.target.value))}
-          className={`${changeMode ?'bg-[#1F1D2B] text-gray-300':'bg-gray-300 text-black'} w-[1205x] py-2 px-4 rounded-lg`}
+          className={`${
+            changeMode ? "bg-[#1F1D2B] text-gray-300" : "bg-gray-300 text-black"
+          } w-[1205x] py-2 px-4 rounded-lg`}
         >
           <option value={8}>Mostrar 8</option>
           <option value={10}>Mostrar 10</option>
@@ -83,11 +91,10 @@ function ProductList({ data1 }) {
       </div>
       <div className="flex items-center justify-center ">
         <div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-14
-"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-14"
         >
           {filteredList.map((data) => (
-            <Card key={data.id} data={data} />
+            <Card key={data.id} data={data} type="ProductList" />
           ))}
         </div>
       </div>

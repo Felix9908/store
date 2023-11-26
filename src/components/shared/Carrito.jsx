@@ -55,18 +55,18 @@ function Carrito() {
           </div>
         </div>
         {/* Submit Payment */}
-        <div className="bg-[#262837]  absolute w-full bottom-0 left-0 p-4">
+        <div className={`${changeMode ?"bg-[#262837]":"bg-gray-200"} absolute w-full bottom-0 left-0 p-4`}>
           <div
             className={` ${
               dataDiscount.estadoDescuento == "Activated" ? "" : "hidden"
             } felx items-center justify-between mb-4`}
           >
-            <span className="text-gray-400">Discount:</span>
-            <span>${(parseFloat(total) * numeroConvertido).toFixed(2)}</span>
+            <span className={`${changeMode ? "text-gray-400" : "text-black"}`}>Discount:</span>
+            <span className="text-blue-500">${(parseFloat(total) * numeroConvertido).toFixed(2)}</span>
           </div>
           <div className="felx items-center justify-between mb-6">
-            <span className="text-gray-400">Subtotal:</span>
-            <span>
+            <span className={`${changeMode ? "text-gray-400" : "text-black"}`}>Subtotal:</span>
+            <span className="text-green-500">
               $
               {parseFloat(total).toFixed(2) -
                 parseFloat(total).toFixed(2) * numeroConvertido}
@@ -75,7 +75,7 @@ function Carrito() {
           <div>
             <Link
               to="/buyPage"
-              className="bg-[#ec7c6a] w-full py-2 px-4 rounded-lg"
+              className={`${changeMode ? "bg-[#ec7c6a]" : "bg-blue-500"} w-full py-2 px-4 rounded-lg`}
             >
               Continue to payment
             </Link>

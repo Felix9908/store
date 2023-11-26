@@ -32,7 +32,7 @@ function Header({ title }) {
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
           <div className="flex items-center ">
             <div className={`${changeMode ? "text-[#ec7c6a]" : "text-[#000]"}`}>
-              <h1 className="text-4xl mb-3">App name</h1>
+              <h1 className="text-4xl mb-3">TiendaEnCasa</h1>
               <h2 className="text-2xl ">{title}</h2>
             </div>
             {/* modo oscuro y claro */}

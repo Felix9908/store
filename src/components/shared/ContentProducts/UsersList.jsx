@@ -7,8 +7,6 @@ const UserList = () => {
   const { setAlertMessage, setShowAlert, setColorAlert, fetchUsers, users, changeMode} =
     useContext(ProductContext);
 
-  console.log(users);
-
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -16,7 +14,7 @@ const UserList = () => {
   const deleteUser = async (id) => {
     try {
       await axios
-        .delete(`http://localhost:9999/deleteUser/${id}`)
+        .delete(`https://back-endstore-production.up.railway.app/deleteUser/${id}`)
         .then((res) => {
           setShowAlert(true);
           setAlertMessage(res.data);

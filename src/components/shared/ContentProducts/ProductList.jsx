@@ -90,9 +90,7 @@ function ProductList({ data1 }) {
         </select>
       </div>
       <div className="flex items-center justify-center ">
-        <div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-14"
-        >
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-14">
           {filteredList.map((data) => (
             <Card key={data.id} data={data} type="ProductList" />
           ))}

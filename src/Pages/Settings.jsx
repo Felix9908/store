@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import Header from "../components/shared/Header";
 import CreateProduct from "../components/shared/ContentProducts/CreateProduct";
 import UsersList from "../components/shared/ContentProducts/UsersList";
@@ -6,10 +6,12 @@ import CreateUser from "./CreateUser";
 import ContactUsList from "../components/shared/ContentProducts/ContactUsList";
 import ButtonSettings from "../components/shared/ContentProducts/ButtonSettings";
 import ChangeDiscount from "../components//shared/ContentProducts/ChangeDiscount";
+import { ProductContext } from "../Context/ProductContext";
 
 function Settings() {
   const [showMenu, setShowMenu] = useState(false);
   const [showSettings, setShowSettings] = useState("CreateProduct");
+  const {changeMode} = useContext(ProductContext)
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -32,7 +34,7 @@ function Settings() {
   };
 
   return (
-    <div>
+    <div className={`${changeMode ? "bg-[#262837]" : ""}`}>
       <main className="lg:pl-32 grid grid-cols-1 lg:grid-cols-8 p-4 pb-20">
         <div className="lg:col-span-8 md:p-8">
           <Header title="Settings" />

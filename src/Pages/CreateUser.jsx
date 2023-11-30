@@ -38,7 +38,7 @@ const CreateUser = () => {
       });
     } catch (err) {
       setShowAlert(true);
-      setAlertMessage(err.message); // Aquí podrías cambiarlo a err.message para obtener un mensaje más descriptivo.
+      setAlertMessage(err.message);
       setColorAlert("bg-red-500");
       setAlertTitulo("Error");
     }

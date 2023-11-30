@@ -5,11 +5,11 @@ import Header from "../components/shared/Header";
 import { ProductContext } from "../Context/ProductContext";
 
 function Home() {
-  const { data, logged } = useContext(ProductContext);
+  const { data, logged, changeMode } = useContext(ProductContext);
 
 
   return (
-    <div>
+    <div className={`${changeMode ? "bg-[#262837]" : ""}`}>
       <main
         className={`${
           logged ? "lg:pl-32 lg:grid-cols-8" : ""

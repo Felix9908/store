@@ -8,7 +8,7 @@ import Card from "../components/shared/Card";
 const BuysPage = () => {
   const [telefono, setTelefono] = useState("");
   const [direccion, setDireccion] = useState("");
-  const { cart } = useContext(CartContext);
+  const { cart, setCart} = useContext(CartContext);
   const {
     dataDiscount,
     getBuys,
@@ -53,6 +53,7 @@ const BuysPage = () => {
           available: cart[i].available,
           fecha_compra: Date(),
         };
+        setCart([])
         buys({ buyData });
       } else {
         let buyData = {
@@ -66,6 +67,7 @@ const BuysPage = () => {
           available: cart[i].available,
           fecha_compra: Date(),
         };
+        setCart([])
         buys({ buyData });
       }
     }
@@ -74,11 +76,11 @@ const BuysPage = () => {
   return (
     <div className="lg:ml-[110px] pt-10">
       <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
-        <h6 className="text-2xl font-semibold mb-4">Formulario de compra</h6>
+        <h6 className="text-2xl font-semibold mb-4">Formulario de envío</h6>
         <p>
           El encargo se hara a domicilio de foma gratuita. Para realizarlo necesitamos saber
           cual es su número y dirección. Solo es para
-          dentro de Manicaragua
+          dentro de Manicaragua.
         </p>
         <form className="mt-3" onSubmit={handleSubmit}>
           <div className="mb-4">

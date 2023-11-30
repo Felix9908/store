@@ -37,18 +37,18 @@ function Carrito() {
         </h1>
         {/* Card */}
         <div>
-          <div className="grid grid-cols-6 mb-4 p-4">
+          <div className="grid grid-cols-6 p-4">
             <h5
               className={`col-span-4 ${
                 changeMode ? `text-whitw` : `text-black`
               }`}
             >
-              item
+              Productos
             </h5>
             <h5 className={`${changeMode ?`text-whitw`:`text-black`}`}>Cant</h5>
             <h5 className={`${changeMode ?`text-whitw`:`text-black`}`}>Precio</h5>
           </div>
-          <div className="flex flex-col gap-y-2 h-[360px] md:h-[480px] lg:h-[420px] overflow-y-auto overflow-x-hidden border-b">
+          <div className="flex flex-col gap-y-2 h-[550px] md:h-[370px] overflow-y-auto overflow-x-hidden border-b ">
             {cart.map((item) => {
               return <ProductCarrito item={item} key={item.id} />;
             })}
@@ -61,7 +61,7 @@ function Carrito() {
               dataDiscount.estadoDescuento == "Activated" ? "" : "hidden"
             } felx items-center justify-between mb-4`}
           >
-            <span className={`${changeMode ? "text-gray-400" : "text-black"}`}>Discount:</span>
+            <span className={`${changeMode ? "text-gray-400" : "text-black"}`}>Descuento:</span>
             <span className="text-blue-500">${(parseFloat(total) * numeroConvertido).toFixed(2)}</span>
           </div>
           <div className="felx items-center justify-between mb-6">
@@ -77,7 +77,7 @@ function Carrito() {
               to="/buyPage"
               className={`${changeMode ? "bg-[#ec7c6a]" : "bg-blue-500"} w-full py-2 px-4 rounded-lg`}
             >
-              Continue to payment
+              Continue al formulario de envío
             </Link>
           </div>
         </div>

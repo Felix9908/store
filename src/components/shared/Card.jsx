@@ -28,12 +28,12 @@ function Card({ data, type }) {
             className={`${logged ? "" : "hidden"}`}
             onClick={() => addToCart(data, data.id)}
           >
-            <div className="flex justify-center items-center text-white md:w-12 md:h-12 bg-[#ec7c6a]">
+            <div className={`flex justify-center items-center text-white md:w-12 md:h-12 ${changeMode ? "bg-[#ec7c6a]": "bg-blue-500"}`}>
               <RiAddFill className="text-3xl" />
             </div>
           </button>
           <Link to={`/detalles/${data.id}`}>
-            <div className="flex justify-center items-center text-white md:w-12 md:h-12 bg-[#ec7c6a]">
+            <div className={`flex justify-center items-center text-white md:w-12 md:h-12 bg-[#ec7c6a] ${changeMode ? "bg-[#ec7c6a]": "bg-blue-500"}`}>
               <RiEyeLine className="text-3xl" />
             </div>
           </Link>
@@ -41,7 +41,7 @@ function Card({ data, type }) {
             className={`${privUser == "Admin" ? "" : "hidden"}`}
             onClick={() => deleteProduct(data.id)}
           >
-            <div className="flex justify-center items-center text-white md:w-12 md:h-12 bg-red-500">
+            <div className={`flex justify-center items-center text-white md:w-12 md:h-12  ${changeMode ? "bg-[#ec7c6a]": "bg-blue-500"}`}>
               <RiSubtractLine className="text-3xl" />
             </div>
           </button>
